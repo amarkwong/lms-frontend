@@ -111,12 +111,17 @@ class CustomizedSnackbars extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { label,classes,status,role } = this.props;
 
+    console.log('SNACK',this.props)
     return (
       <div>
-        <Button className={classes.margin} onClick={this.handleClick}>
-          Open success snackbar
+        <Button className={classes.margin} onClick={this.handleClick} disabled={
+          (label === 'Enroll'|| label === 'Teach') ?
+          (status === 'enrolled' || status === 'teached' || role === 'admin'):
+          !(status === 'enrolled' || status === 'teached' || role === 'admin')
+          }>
+        {label}
         </Button>
         <Snackbar
           anchorOrigin={{
@@ -130,7 +135,7 @@ class CustomizedSnackbars extends React.Component {
         <MySnackbarContentWrapper
           variant="success"
           className={classes.margin}
-          message={"You have enrolled in" + this.props.courseNam3 }
+          message={"You have enrolled in " + classes.courseName }
         />
         </Snackbar>
       </div>

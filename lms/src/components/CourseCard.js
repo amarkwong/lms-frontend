@@ -25,6 +25,8 @@ import CustomizedSnackbars from './SnackBar';
 const styles = theme => ({
     card: {
         maxWidth: 400,
+        padding: theme.spacing.unit * 2,
+        margin: theme.spacing.unit * 2,
     },
     media: {
         height: 0,
@@ -49,10 +51,14 @@ const styles = theme => ({
 });
 
 
-const studentOrTeacher = (role) => (role === 'student' ?
-    // <CourseModal ></CourseModal>:
-    <CustomizedSnackbars></CustomizedSnackbars>:
-    null);
+const EnrollOrTeach = (role) => (role === 'student' ?
+    <CustomizedSnackbars label='Enroll' status='unenrolled' role={role}></CustomizedSnackbars>:
+    <CustomizedSnackbars label='Teach' status='unteached' role={role}></CustomizedSnackbars>
+    );
+const DropOrResign = (role) => (role === 'teacher' ?
+    <CustomizedSnackbars label='Drop'></CustomizedSnackbars>:
+    <CustomizedSnackbars label='Resign'></CustomizedSnackbars>
+    );
 class CourseCard extends React.Component {
     // constructor(props) {
     //     super(props);
@@ -106,13 +112,11 @@ class CourseCard extends React.Component {
                         <ShareIcon />
                     </IconButton> */}
                     {
-                        studentOrTeacher('student')
+                        EnrollOrTeach('student')
                     }
-
                     {
-                        studentOrTeacher('student')
+                        DropOrResign('student')
                     }
-
                     <IconButton
                         className={classnames(classes.expand, {
                             [classes.expandOpen]: this.state.expanded,

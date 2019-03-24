@@ -5,8 +5,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
+import PersonIcon from '@material-ui/icons/Person';
+
+import PersonMenu from './PersonMenu';
 
 const styles = {
   root: {
@@ -15,6 +19,7 @@ const styles = {
   grow: {
     flexGrow: 1,
   },
+  color: 'inherit',
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -27,17 +32,29 @@ function NavBar(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-        <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h6" color="inherit" className={classes.grow}>
             MindCan
           </Typography>
           {/* <TextButton>Courses</TextButton> */}
-  <Button color="inherit" containerElement={<Link to="/dashboard"/>}>Courses</Button>
-          <Button color="inherit" >Teachers</Button>
-          <Button color="inherit" >Students</Button>
+          <Grid container spacing={24}>
+            <Grid item xs>
+              <Button color="inherit" containerElement={<Link to="/dashboard" />}>Home</Button>
+            </Grid>
+            <Grid item xs>
+              <Button color="inherit" containerElement={<Link to="/dashboard" />}>Courses</Button>
+            </Grid>
+            <Grid item xs>
+              <Button color="inherit" >Teachers</Button>
+            </Grid>
+            <Grid item xs>
+              <Button color="inherit" >Students</Button>
+            </Grid>
+          </Grid>
           {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
+            <PersonIcon />
           </IconButton> */}
-          <Button color="inherit">Login</Button>
+          <PersonMenu></PersonMenu>
+          {/* <Button color="inherit">Login</Button> */}
         </Toolbar>
       </AppBar>
     </div>
