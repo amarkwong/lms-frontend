@@ -14,18 +14,10 @@ import PersonIcon from '@material-ui/icons/Person';
 
 import CourseCard from '../components/CourseCard';
 import CourseModal from '../components/CourseModal'
+import AdminMenu from '../components/AdminMenu';
 
 const styles = {
     
-    "@global":    {
-        body: {
-        backgroundImage: "url('../images/slider-1.jpg')",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center center",
-        backgroundSize: "cover",
-        backgroundAttachment: "fixed",
-        height: "100%"
-    },
     root: {
         flexGrow: 1,
     },
@@ -37,7 +29,6 @@ const styles = {
         marginLeft: -12,
         marginRight: 20,
     },
-}
 };
 
 class Course extends React.Component {
@@ -45,10 +36,11 @@ class Course extends React.Component {
         return (
             <div>
             <Grid container spacing={24} direction="row" justify="space-evenly" alignItems="flex-start" >
-                    <CourseCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg"></CourseCard>
-                    <CourseCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg"></CourseCard>
+                    <CourseCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg" mode='edit'></CourseCard>
+                    <CourseCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg" mode='delete'></CourseCard>
             </Grid>
-            <CourseModal></CourseModal>
+            {/* <CourseModal></CourseModal> */}
+            <AdminMenu></AdminMenu>
             </div>
         );
     }

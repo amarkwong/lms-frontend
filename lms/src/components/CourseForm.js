@@ -29,7 +29,7 @@ const currencies = [
         label: '$',
     },
     {
-        value: 'USD',
+        value: 'AUD',
         label: 'A$',
     },
     {
@@ -51,9 +51,7 @@ const updateOrCreate = (text,modalType) => (modalType === 'update' ?
     null);
 
 class CourseForm extends React.Component {
-    constructor(props){
-        super(props);
-    }
+
     state = {
         name: 'Cat in the Hat',
         age: '',
@@ -66,7 +64,8 @@ class CourseForm extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, modalType, courseName, description, price } = this.props;
+        console.log('FORM',modalType);
 
         return (
             <form className={classes.container} noValidate autoComplete="off">
@@ -74,7 +73,7 @@ class CourseForm extends React.Component {
                     id="standard-name"
                     label="Course Name"
                     className={classes.textField}
-                    defaultValue={updateOrCreate(this.props.courseName,this.props.modalType)}
+                    defaultValue={updateOrCreate(courseName,modalType)}
                     onChange={this.handleChange('name')}
                     margin="normal"
                 />
@@ -82,7 +81,7 @@ class CourseForm extends React.Component {
                 <TextField
                     id="standard-description"
                     label="Description"
-                    defaultValue={updateOrCreate(this.props.description,this.props.modalType)}
+                    defaultValue={updateOrCreate(description,modalType)}
                     className={classes.textField}
                     margin="normal"
                 />
@@ -91,7 +90,7 @@ class CourseForm extends React.Component {
                     required
                     id="standard-price"
                     label="Price"
-                    defaultValue={updateOrCreate(this.props.price,this.props.modalType)}
+                    defaultValue={updateOrCreate(price,modalType)}
                     className={classes.textField}
                     margin="normal"
                 />

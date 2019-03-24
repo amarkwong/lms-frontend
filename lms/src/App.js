@@ -33,14 +33,7 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar className="App-Navbar"></NavBar>
-        <Grid container spacing={24}>
-          <Grid item xs={11} >
-            <Course></Course>
-          </Grid>
-          <Grid item xs={1}>
-          <Paper className={classes.paper}>xs=1</Paper>
-          </Grid>
-        </Grid>
+        <Course></Course>
       </div>
     );
   }

@@ -4,6 +4,10 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 import CourseForm from './CourseForm';
 
 function rand() {
@@ -46,12 +50,20 @@ class CourseModal extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, modalType } = this.props;
+    console.log("Modal",modalType);
 
     return (
       <div>
         {/* <Typography gutterBottom>Click to get the full Modal experience!</Typography> */}
-        <Button onClick={this.handleOpen}>Add a course</Button>
+        { modalType === 'add' ? 
+        <IconButton onClick={this.handleOpen}><AddIcon/></IconButton>
+        :
+        modalType ==='edit' ?
+        <IconButton onClick={this.handleOpen}><EditIcon/></IconButton>
+        :
+        <IconButton onClick={this.handelOpen}><DeleteIcon/></IconButton>
+        }
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
@@ -59,7 +71,7 @@ class CourseModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-          <CourseForm modalType='update' courseName='Junior AI'></CourseForm>
+          <CourseForm modalType={modalType} courseName='Junior AI'></CourseForm>
             {/* <CourseModalWrapped /> */}
           </div>
         </Modal>

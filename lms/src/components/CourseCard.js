@@ -16,7 +16,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
+import { Grid } from '@material-ui/core';
 
 
 import CourseModal from './CourseModal';
@@ -35,16 +38,16 @@ const styles = theme => ({
     actions: {
         display: 'flex',
     },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
+    // expand: {
+    //     transform: 'rotate(0deg)',
+    //     marginLeft: 'auto',
+    //     transition: theme.transitions.create('transform', {
+    //         duration: theme.transitions.duration.shortest,
+    //     }),
+    // },
+    // expandOpen: {
+    //     transform: 'rotate(180deg)',
+    // },
     avatar: {
         backgroundColor: red[500],
     },
@@ -59,6 +62,7 @@ const DropOrResign = (role) => (role === 'teacher' ?
     <CustomizedSnackbars label='Drop'></CustomizedSnackbars>:
     <CustomizedSnackbars label='Resign'></CustomizedSnackbars>
     );
+
 class CourseCard extends React.Component {
     // constructor(props) {
     //     super(props);
@@ -75,24 +79,26 @@ class CourseCard extends React.Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, mode } = this.props;
 
         return (
             <Card className={classes.card}>
                 <CardHeader
                     avatar={
-                        <Avatar aria-label="Recipe" className={classes.avatar}>
-                            R
+                        <Avatar aria-label="Course" className={classes.avatar}>
+                            C
             </Avatar>
                     }
                     action={
-                        <IconButton>
-                            <MoreVertIcon />
-                        </IconButton>
+                        mode === 'edit' ?
+                        <CourseModal modalType='edit'></CourseModal>
+                        :
+                        <CourseModal modalType='delete'></CourseModal>
                     }
                     title="Shrimp and Chorizo Paella"
                     subheader="September 14, 2016"
-                />
+                >
+                </CardHeader>
                 <CardMedia
                     className={classes.media}
                     image={this.props.ImageRef}
@@ -105,6 +111,7 @@ class CourseCard extends React.Component {
           </Typography>
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
+                {/* <Grid justify="space-evenly" alignItems="flex-start"> */}
                     {/* <IconButton aria-label="Add to favorites">
                         <FavoriteIcon />
                     </IconButton>
@@ -117,18 +124,9 @@ class CourseCard extends React.Component {
                     {
                         DropOrResign('student')
                     }
-                    <IconButton
-                        className={classnames(classes.expand, {
-                            [classes.expandOpen]: this.state.expanded,
-                        })}
-                        onClick={this.handleExpandClick}
-                        aria-expanded={this.state.expanded}
-                        aria-label="Show more"
-                    >
-                        <ExpandMoreIcon />
-                    </IconButton>
-                </CardActions>
-                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+                    {/* </Grid> */}
+                    </CardActions>
+                {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph>Method:</Typography>
                         <Typography paragraph>
@@ -154,7 +152,7 @@ class CourseCard extends React.Component {
                             Set aside off of the heat to let rest for 10 minutes, and then serve.
             </Typography>
                     </CardContent>
-                </Collapse>
+                </Collapse> */}
             </Card>
         );
     }
