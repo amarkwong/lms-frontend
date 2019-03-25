@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export function getCourses(){
 
-    return axios.get(`api/course`)
+    return axios.get(`/course`)
 }
 
 // export const getCourses = () => {
@@ -24,19 +24,17 @@ export function createCourse(course){
 }
 
 export function updateCourse(id,data){
-    console.log("call put, id is ",id);
-
-    console.log("data ",data);
-    return axios.put(`/course?id=${id}`,data);
+    return axios.put(`/course/${id}`,data);
+    // return axios.put(`/course?id=${id}`,data);
 }
 
 export const deleteCourse = (courseId) => {
     return axios.delete(`/course/${courseId}`);
 };
 
-export function updateCourseById(id,data){
-    return axios.put(`/course/${id}`,data);
-}
+// export function updateCourseById(id,data){
+//     return axios.put(`/course/${id}`,data);
+// }
 
 export function fetchLecturersOfCourse(id){
     return axios.get(`/course/fetchLecturersOfCourse/${id}`).then(response=>(response.data));

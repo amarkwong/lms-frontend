@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import Icon from '@material-ui/core/Icon';
 import EditIcon from '@material-ui/icons/Edit';
-import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Grid } from '@material-ui/core';
+import { connect } from 'react-redux';
+
+import { setMode } from '../actions/courses';
+
+
 import CourseModal from './CourseModal';
 
 const styles = {
@@ -20,6 +23,7 @@ class LabelBottomNavigation extends React.Component {
     state = {
         // value: 'Edit',
         value: '',
+        mode: '',
     };
 
     handleChange = (event, value) => {
@@ -28,15 +32,21 @@ class LabelBottomNavigation extends React.Component {
     };
 
     editMode = () => {
-       console.log('EDIT MODE') ;
+        this.props.setMode('edit');
+        // this.setState({mode:'edit' });
     };
 
     addMode = () => {
-       console.log('add MODE') ;
+        this.props.setMode('add');
+        // this.setState({mode:'add' });
+        return (
+            <CourseModal modalType='add' value="add"></CourseModal>
+        )
     };
 
     deleteMode = () => {
-       console.log('delete MODE') ;
+        this.props.setMode('delete');
+        // this.setState({mode:'delete' });
     };
 
 
@@ -48,6 +58,7 @@ class LabelBottomNavigation extends React.Component {
             <Grid container spacing={24} direction="row" justify="space-evenly" alignItems="flex-start" >
                 <BottomNavigation value={value} onChange={this.handleChange} className={classes.root}>
                     <BottomNavigationAction label="Edit Mode" value="Edit" onClick={this.editMode} icon={<EditIcon />} />
+                    {/* <BottomNavigationAction label="Add Mode" value="Add" onClick={this.addMode} icon={<AddIcon />} /> */}
                     <CourseModal modalType='add' value="add"></CourseModal>
                     <BottomNavigationAction label="Delete Mode" value="Delete" onClick={this.deleteMode} icon={<DeleteIcon />} />
                 </BottomNavigation>
@@ -60,4 +71,8 @@ LabelBottomNavigation.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LabelBottomNavigation);
+
+    
+export default connect(({courses}) => ({courses}), {
+    setMode})(
+    withStyles(styles)(LabelBottomNavigation));

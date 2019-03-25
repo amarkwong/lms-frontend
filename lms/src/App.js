@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import Icon from '@material-ui/core/Icon';
-import { AccessAlarm, ThreeDRotation, User } from '@material-ui/icons';
-import Grid from '@material-ui/core/Grid';
-// import { CourseCard,SimpleModalWrapped } from './components';
-import CourseCard from './components/CourseCard';
-import CourseModal from './components/CourseModal';
+import { Switch, Route } from 'react-router-dom';
 import NavBar from './components/NavBar';
-import Course from './pages/Course';
-import Paper from '@material-ui/core/Paper';
-import Hidden from '@material-ui/core/Hidden';
+import Courses from './pages/Courses';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Students from './pages/Students.js';
+import Teachers from './pages/Teachers';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -29,11 +26,17 @@ const styles = theme => ({
 
 class App extends Component {
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
       <div className="App">
         <NavBar className="App-Navbar"></NavBar>
-        <Course></Course>
+        <Switch>
+            <Route path='/home' exact component={Home} />
+            <Route path='/login' exact component={Login} />
+            <Route path='/courses' exact component={Courses} />
+            <Route path='/students' exact component={Students} />
+            <Route path='Teachers' exact component={Teachers} />
+          </Switch>
       </div>
     );
   }

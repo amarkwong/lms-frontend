@@ -113,7 +113,6 @@ class CustomizedSnackbars extends React.Component {
   render() {
     const { label,classes,status,role } = this.props;
 
-    console.log('SNACK',this.props)
     return (
       <div>
         <Button className={classes.margin} onClick={this.handleClick} disabled={

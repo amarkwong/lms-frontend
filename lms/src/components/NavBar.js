@@ -5,10 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
-import PersonIcon from '@material-ui/icons/Person';
 
 import PersonMenu from './PersonMenu';
 
@@ -38,16 +35,16 @@ function NavBar(props) {
           {/* <TextButton>Courses</TextButton> */}
           <Grid container spacing={24}>
             <Grid item xs>
-              <Button color="inherit" containerElement={<Link to="/dashboard" />}>Home</Button>
+              <Button color="inherit" href="/">Home</Button>
             </Grid>
             <Grid item xs>
-              <Button color="inherit" containerElement={<Link to="/dashboard" />}>Courses</Button>
+              <Button color="inherit" href="/courses">Courses</Button>
             </Grid>
             <Grid item xs>
-              <Button color="inherit" >Teachers</Button>
+              <Button color="inherit" href="/teachers">Teachers</Button>
             </Grid>
             <Grid item xs>
-              <Button color="inherit" >Students</Button>
+              <Button color="inherit" href="/students">Students</Button>
             </Grid>
           </Grid>
           {/* <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">

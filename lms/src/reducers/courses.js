@@ -1,7 +1,8 @@
 import {Types} from '../actions/courses';
 
 const INITIAL_STATE = {
-    items: []
+    items: [],
+    mode: '',
 };
 
 export default function courses(state = INITIAL_STATE, action) {
@@ -16,6 +17,17 @@ export default function courses(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 error: action.payload.error
+            }
+        }
+        case Types.SET_MODE: {
+            return {
+                ...state,
+                mode: action.payload
+            }
+        }
+        case Types.GET_MODE: {
+            return {
+                ...state,
             }
         }
         default: {

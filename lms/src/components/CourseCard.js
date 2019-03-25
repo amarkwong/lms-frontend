@@ -1,25 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import classnames from 'classnames';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import red from '@material-ui/core/colors/red';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
-import { Grid } from '@material-ui/core';
 
 
 import CourseModal from './CourseModal';
@@ -55,13 +44,13 @@ const styles = theme => ({
 
 
 const EnrollOrTeach = (role) => (role === 'student' ?
-    <CustomizedSnackbars label='Enroll' status='unenrolled' role={role}></CustomizedSnackbars>:
+    <CustomizedSnackbars label='Enroll' status='unenrolled' role={role}></CustomizedSnackbars> :
     <CustomizedSnackbars label='Teach' status='unteached' role={role}></CustomizedSnackbars>
-    );
+);
 const DropOrResign = (role) => (role === 'teacher' ?
-    <CustomizedSnackbars label='Drop'></CustomizedSnackbars>:
+    <CustomizedSnackbars label='Drop'></CustomizedSnackbars> :
     <CustomizedSnackbars label='Resign'></CustomizedSnackbars>
-    );
+);
 
 class CourseCard extends React.Component {
     // constructor(props) {
@@ -79,39 +68,41 @@ class CourseCard extends React.Component {
     }
 
     render() {
-        const { classes, mode } = this.props;
-
+        const { classes, mode, data } = this.props;
+        // console.log('CARD', data);
+        console.log('CARD MODE', mode);
         return (
             <Card className={classes.card}>
                 <CardHeader
                     avatar={
                         <Avatar aria-label="Course" className={classes.avatar}>
                             C
-            </Avatar>
+                        </Avatar>
                     }
                     action={
                         mode === 'edit' ?
-                        <CourseModal modalType='edit'></CourseModal>
-                        :
-                        <CourseModal modalType='delete'></CourseModal>
+                            <CourseModal modalType='edit' data={data}></CourseModal>
+                            : mode === 'delete' ?
+                                <CourseModal modalType='delete' ></CourseModal>
+                                : null
                     }
-                    title="Shrimp and Chorizo Paella"
-                    subheader="September 14, 2016"
+                    title={data.Name}
+                    subheader={
+                        '$ ' + data.Price}
                 >
                 </CardHeader>
                 <CardMedia
                     className={classes.media}
-                    image={this.props.ImageRef}
-                    title="Paella dish"
+                    image={data.ImageRef}
+                // title="Paella dish"
                 />
                 <CardContent>
                     <Typography component="p">
-                        This impressive paella is a perfect party dish and a fun meal to cook together with your
-                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
-          </Typography>
+                        {data.Description}
+                    </Typography>
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
-                {/* <Grid justify="space-evenly" alignItems="flex-start"> */}
+                    {/* <Grid justify="space-evenly" alignItems="flex-start"> */}
                     {/* <IconButton aria-label="Add to favorites">
                         <FavoriteIcon />
                     </IconButton>
@@ -125,7 +116,7 @@ class CourseCard extends React.Component {
                         DropOrResign('student')
                     }
                     {/* </Grid> */}
-                    </CardActions>
+                </CardActions>
                 {/* <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
                     <CardContent>
                         <Typography paragraph>Method:</Typography>

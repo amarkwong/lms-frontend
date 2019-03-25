@@ -1,14 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+
 import CourseForm from './CourseForm';
+import {
+  getCoursesRequest,
+  createCourseRequest,
+  updateCourseRequest,
+  deleteCourseRequest,
+  coursesError
+} from '../actions/courses'
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -37,9 +44,13 @@ const styles = theme => ({
 });
 
 class CourseModal extends React.Component {
-  state = {
-    open: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      data: this.props.data,
+    };
+  }
 
   handleOpen = () => {
     this.setState({ open: true });
@@ -49,20 +60,46 @@ class CourseModal extends React.Component {
     this.setState({ open: false });
   };
 
+  handleCreateCourseSubmit = ({ name, description, price, maxStudents, availableSeats, imageRef }) => {
+    this.props.createCourseRequest({
+      name,
+      description,
+      price,
+      maxStudents,
+      availableSeats,
+      imageRef
+    });
+  };
+
+  handleUpdateCourseSubmit = ({ name, description, price, maxStudents, availableSeats, imageRef }) => {
+    const id=this.props.data.ID;
+    console.log('data ', name, description, price, maxStudents, availableSeats, imageRef);
+    this.props.updateCourseRequest({
+      id, 
+      name,
+      description,
+      price,
+      maxStudents,
+      availableSeats,
+      imageRef
+    })
+  }
+
   render() {
-    const { classes, modalType } = this.props;
-    console.log("Modal",modalType);
+    const { classes, modalType, data } = this.props;
+    console.log("Modal", this.props);
+    // console.log("Modal",modalType);
 
     return (
       <div>
         {/* <Typography gutterBottom>Click to get the full Modal experience!</Typography> */}
-        { modalType === 'add' ? 
-        <IconButton onClick={this.handleOpen}><AddIcon/></IconButton>
-        :
-        modalType ==='edit' ?
-        <IconButton onClick={this.handleOpen}><EditIcon/></IconButton>
-        :
-        <IconButton onClick={this.handelOpen}><DeleteIcon/></IconButton>
+        {modalType === 'add' ?
+          <IconButton onClick={this.handleOpen}><AddIcon /></IconButton>
+          :
+          modalType === 'edit' ?
+            <IconButton onClick={this.handleOpen}><EditIcon /></IconButton>
+            :
+            <IconButton onClick={this.handelOpen}><DeleteIcon /></IconButton>
         }
         <Modal
           aria-labelledby="simple-modal-title"
@@ -71,7 +108,11 @@ class CourseModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-          <CourseForm modalType={modalType} courseName='Junior AI'></CourseForm>
+            <CourseForm modalType={modalType} data={data}
+              onSubmit={modalType === 'add' ?
+                this.handleCreateCourseSubmit :
+                this.handleUpdateCourseSubmit}>
+            </CourseForm>
             {/* <CourseModalWrapped /> */}
           </div>
         </Modal>
@@ -87,4 +128,9 @@ CourseModal.propTypes = {
 // We need an intermediary variable for handling the recursive nesting.
 const CourseModalWrapped = withStyles(styles)(CourseModal);
 
-export default CourseModalWrapped;
+export default connect(({ courses }) => ({ courses }), {
+  createCourseRequest,
+  updateCourseRequest,
+  deleteCourseRequest,
+})(CourseModalWrapped);
+// export default connect(CourseModalWrapped;
