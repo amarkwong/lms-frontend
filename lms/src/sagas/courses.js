@@ -19,9 +19,10 @@ function* watchGetCoursesRequest(){
 	yield takeEvery(actions.Types.GET_COURSES_REQUEST, getCourses);
 }
 
-function* deleteCourse(courseId){
+function* deleteCourse(payload){
+    console.log('SAGA delete',payload.id);
     try{
-        yield call(api.deleteCourse, courseId);
+        yield call(api.deleteCourse, payload.id);
 
         yield call(getCourses);
     }catch(e){
@@ -61,7 +62,7 @@ function* watchCreateCourseRequest(){
     yield takeLatest(actions.Types.CREATE_COURSE_REQUEST, createCourse);
 }
 
-function* updateCourse(payload){
+function* updateCourse({payload}){
     try{
         yield call(api.updateCourse, payload.id,{
             Name: payload.name,

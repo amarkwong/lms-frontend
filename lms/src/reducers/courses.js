@@ -19,6 +19,16 @@ export default function courses(state = INITIAL_STATE, action) {
                 error: action.payload.error
             }
         }
+        case Types.UPDATE_COURSE_REQUEST: {
+            return {
+                ...state,
+            }
+        }
+        case Types.DELETE_COURSE_REQUEST: {
+            return {
+                ...state,
+            }
+        }
         case Types.SET_MODE: {
             return {
                 ...state,

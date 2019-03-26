@@ -37,12 +37,13 @@ class Course extends React.Component {
         this.props.getCoursesRequest();
     }
     render() {
-        const courses = this.props.courses.items
+        const courses = this.props.courses.items;
+        const mode = this.props.courses.mode;
         return (
             <div>
             <Grid container spacing={24} direction="row" justify="space-evenly" alignItems="flex-start" >
             {courses.slice(0,courses.length).map(course => (
-                    <CourseCard key={course.ID} mode='edit' data={course}/>))}
+                    <CourseCard key={course.ID} mode={mode} data={course}/>))}
                     {/* <CourseCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg" mode='edit'></CourseCard> */}
                     {/* <CourseCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg" mode='delete'></CourseCard> */}
             </Grid>

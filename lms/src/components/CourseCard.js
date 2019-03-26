@@ -69,7 +69,7 @@ class CourseCard extends React.Component {
 
     render() {
         const { classes, mode, data } = this.props;
-        // console.log('CARD', data);
+        console.log('CARD', data);
         console.log('CARD MODE', mode);
         return (
             <Card className={classes.card}>
@@ -83,7 +83,7 @@ class CourseCard extends React.Component {
                         mode === 'edit' ?
                             <CourseModal modalType='edit' data={data}></CourseModal>
                             : mode === 'delete' ?
-                                <CourseModal modalType='delete' ></CourseModal>
+                                <CourseModal modalType='delete' data={data} ></CourseModal>
                                 : null
                     }
                     title={data.Name}

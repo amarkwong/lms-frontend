@@ -5,6 +5,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
+import LoginModal from './LoginModal';
+import LoginTab from './LoginTab';
 
 const styles = {
   root: {
@@ -22,6 +24,7 @@ const styles = {
 class PersonMenu extends React.Component {
   state = {
     anchorEl: null,
+    showLogin: false,
   };
 
   handleClick = event => {
@@ -30,6 +33,12 @@ class PersonMenu extends React.Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleLogin = () => {
+    this.setState({ anchorEl:null,
+      showLogin: true});
+    console.log('Menu',this.state.showLogin);
   };
 
   render() {
@@ -50,10 +59,13 @@ class PersonMenu extends React.Component {
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
-        >
-          <MenuItem onClick={this.handleClose}>Login/Sign Up</MenuItem>
-          <MenuItem onClick={this.handleClose}>Logout</MenuItem>
+        >}
+          <MenuItem onClick={this.handleLogin}>Login/Signup</MenuItem>
+          <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
         </Menu>
+        {this.state.showLogin && <LoginModal open={this.state.showLogin}></LoginModal>}
+        {/* <LoginModal open={this.state.showLogin}/> */}
+        {/* <LoginTab></LoginTab> */}
       </div>
     );
   }

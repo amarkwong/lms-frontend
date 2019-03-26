@@ -24,11 +24,12 @@ export function createCourse(course){
 }
 
 export function updateCourse(id,data){
-    return axios.put(`/course/${id}`,data);
-    // return axios.put(`/course?id=${id}`,data);
+    return axios.put(`/course?id=${id}`,data);
 }
 
 export const deleteCourse = (courseId) => {
+    console.log('API delete',courseId);
+    console.log('API delete',`/course/${courseId}`);
     return axios.delete(`/course/${courseId}`);
 };
 

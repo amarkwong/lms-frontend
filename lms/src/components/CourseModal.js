@@ -73,8 +73,20 @@ class CourseModal extends React.Component {
 
   handleUpdateCourseSubmit = ({ name, description, price, maxStudents, availableSeats, imageRef }) => {
     const id=this.props.data.ID;
-    console.log('data ', name, description, price, maxStudents, availableSeats, imageRef);
     this.props.updateCourseRequest({
+      id, 
+      name,
+      description,
+      price,
+      maxStudents,
+      availableSeats,
+      imageRef
+    })
+  }
+
+  handleDeleteCourseSubmit = ({ name, description, price, maxStudents, availableSeats, imageRef }) => {
+    const id=this.props.data.ID;
+    this.props.deleteCourseRequest({
       id, 
       name,
       description,
@@ -87,7 +99,7 @@ class CourseModal extends React.Component {
 
   render() {
     const { classes, modalType, data } = this.props;
-    console.log("Modal", this.props);
+    console.log("Modal", modalType);
     // console.log("Modal",modalType);
 
     return (
@@ -99,7 +111,7 @@ class CourseModal extends React.Component {
           modalType === 'edit' ?
             <IconButton onClick={this.handleOpen}><EditIcon /></IconButton>
             :
-            <IconButton onClick={this.handelOpen}><DeleteIcon /></IconButton>
+            <IconButton onClick={this.handleOpen}><DeleteIcon /></IconButton>
         }
         <Modal
           aria-labelledby="simple-modal-title"
@@ -111,7 +123,9 @@ class CourseModal extends React.Component {
             <CourseForm modalType={modalType} data={data}
               onSubmit={modalType === 'add' ?
                 this.handleCreateCourseSubmit :
-                this.handleUpdateCourseSubmit}>
+                modalType === 'edit' ?
+                this.handleUpdateCourseSubmit :
+                this.handleDeleteCourseSubmit}>
             </CourseForm>
             {/* <CourseModalWrapped /> */}
           </div>
