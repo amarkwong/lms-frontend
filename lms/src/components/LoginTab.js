@@ -1,11 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
+import LoginForm from './LoginForm';
+// import SignupForm from './SignupForm';
+
+
+import {
+  getCurrentUserRequest,
+  createUserRequest,
+} from '../actions/users'
 
 function TabContainer({ children, dir }) {
   return (
@@ -24,7 +32,7 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    // width: 500, 
   },
 });
 
@@ -32,6 +40,25 @@ class FullWidthTabs extends React.Component {
   state = {
     value: 0,
   };
+
+  handleGetCurrentUserSubmit = ({ email, password }) => {
+    this.props.getCurrentUser({
+      email,
+      password,
+    });
+  };
+
+  handleCreateUserSubmit = ({ email, password, phone, verifycode, }) => {
+    console.log('Tab create user fired');
+    console.log(email,password,phone,verifycode);
+    console.log(this.props.createUserRequest);
+    this.props.createUserRequest({
+      email,
+      password,
+      phone,
+      verifycode
+    })
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -43,7 +70,6 @@ class FullWidthTabs extends React.Component {
 
   render() {
     const { classes, theme } = this.props;
-
     return (
       <div className={classes.root}>
         <AppBar position="fixed" color="default">
@@ -63,8 +89,8 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>Login</TabContainer>
-          {/* <TabContainer dir={theme.direction}>Sign up</TabContainer> */}
+        <LoginForm mode='login' onSubmit={this.handleGetCurrentUserSubmit}></LoginForm>
+        <LoginForm mode='signup' onSubmit={this.handleCreateUserSubmit}></LoginForm>
         </SwipeableViews>
       </div>
     );
@@ -76,4 +102,7 @@ FullWidthTabs.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+export default connect(({ user }) => ({ user }), {
+  getCurrentUserRequest,
+  createUserRequest,
+})(withStyles(styles, { withTheme: true })(FullWidthTabs));

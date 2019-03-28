@@ -7,6 +7,12 @@ import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import LoginModal from './LoginModal';
 import LoginTab from './LoginTab';
+import { connect } from 'react-redux';
+
+import {
+  getCurrentUserRequest,
+  createUserRequest,
+} from '../actions/users';
 
 const styles = {
   root: {
@@ -38,7 +44,6 @@ class PersonMenu extends React.Component {
   handleLogin = () => {
     this.setState({ anchorEl:null,
       showLogin: true});
-    console.log('Menu',this.state.showLogin);
   };
 
   render() {
@@ -75,4 +80,7 @@ PersonMenu.propTypes = {
   classes: PropTypes.object.isRequired,
 }
 
-export default withStyles(styles)(PersonMenu);
+export default connect(({ user }) => ({ user }), {
+  getCurrentUserRequest,
+  createUserRequest,
+})(withStyles(styles)(PersonMenu));

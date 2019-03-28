@@ -49,14 +49,15 @@ export function logIn(username, password) {
   }
 
   export function signUp(username,password){
-    console.log("SignUP");
+    console.log("SignUP API");
     console.log("SignUP username",username);
     console.log("SignUP password",password);
 
     //register new student
     axios.post('/student',{'Name':username});
 
-    axios.post('register',{'Name':username,'Password':password},'Role','Student').then(result => {
+    // axios.post('register',{'Name':username,'Password':password},'Role','Student').then(result => {
+    axios.post('/register',{'Name':username,'Password':password},'Role','Student').then(result => {
       setTimeout(() => {
         localStorage.setItem('userRole', 'Student');
         localStorage.setItem('userId', result.data.ID);

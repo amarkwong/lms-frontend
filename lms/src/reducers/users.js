@@ -1,15 +1,29 @@
 import {Types} from '../actions/users';
 
 const INITIAL_STATE = {
-    items: []
+    user: {}
 };
 
 export default function users(state = INITIAL_STATE, action) {
+    console.log('REDUCER',action.type);
     switch (action.type) {
-        case Types.GET_USERS_SUCCESS:{
+        case Types.GET_CURRENT_USER_SUCCESS:{
             return {
                 ...state,
-                items: action.payload.items
+                user: action.payload
+            }
+        }
+        case Types.CREATE_USER_REQUEST:{
+            console.log('REDUCER signup');
+            return {
+                ...state,
+                user: action.payload
+            }
+        }
+        case Types.CREATE_USER_SUCCESS:{
+            return {
+                ...state,
+                user: action.payload.user
             }
         }
         case Types.USERS_ERROR: {

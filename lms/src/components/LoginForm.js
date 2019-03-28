@@ -23,138 +23,116 @@ const styles = theme => ({
 });
 
 
-const loginOrSignup = (text, mode) => (mode === 'edit' ?
+const loginOrSignup = (text, mode) => (mode === '' ?
     text :
     null);
 
-class CourseForm extends React.Component {
+class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: '',
-            description: '',
-            price: '',
-            maxStudents: '',
-            availableSeats: '',
-            imageRef: '',
+            email: '',
+            password: '',
+            phone: '',
+            verifycode: '',
         };
     }
 
+    getVerifyCode = () => {
+
+    }
     handleChange = name => event => {
         this.setState({ [name]: event.target.value });
     };
 
-    handleSubmit = e => {
+    handleSignupSubmit = e => {
+        console.log('FORM handle signup fired')
         e.preventDefault();
-        const {name, description, price, maxStudents, availableSeats, imageRef } = this.state;
+        const { email, password, phone, verifycode } = this.state;
 
         this.props.onSubmit({
-            name,
-            description,
-            price,
-            maxStudents,
-            availableSeats,
-            imageRef,
+            email: email,
+            password: password,
+            phone: phone,
+            verifycode: verifycode,
         });
 
-        this.setState({
-            name: '',
-            description: '',
-            price: '',
-            maxStudents: '',
-            availableSeats: '',
-            imageRef: '',
+    };
+
+    handleLoginSubmit = e => {
+        console.log('FORM handle login fired')
+        e.preventDefault();
+        const { email, password, } = this.state;
+
+        this.props.onSubmit({
+            email: email,
+            password: password,
         });
+
+        // this.setState({
+        //     email: '',
+        //     password: '',
+        // });
     };
 
     render() {
         const {
             classes, mode, data } = this.props;
-            console.log('FORM',this.props)
         return (
-            <form className={classes.container} noValidate autoComplete="off" onSubmit={this.handleSubmit}>
-                {mode === 'edit' ?
-                               <TextField
-                               disabled
-                               id="standard-name"
-                               label="Course ID"
-                               className={classes.textField}
-                               defaultValue={loginOrSignup(data.ID, mode)}
-                               onChange={this.handleChange('name')}
-                               margin="normal"
-                           />
-                           :
-                           null}
+            <form className={classes.container} noValidate autoComplete="off" onSubmit={mode==='signup'?this.handleSignupSubmit:this.handleLoginSubmit}>
+                {mode === 'signup' ?
+                    <TextField
+                    required
+                        id="standard-phone"
+                        label="phone"
+                        className={classes.textField}
+                        onChange={this.handleChange('phone')}
+                        margin="normal"
+                    />
+                    :
+                    null}
+                {mode === 'signup' ?
+                    <TextField
+                    required
+                        id="standard-verifycode`"
+                        label="verifycode`"
+                        className={classes.textField}
+                        onChange={this.handleChange('verifycode`')}
+                        margin="normal"
+                    />
+                    :
+                    null}
                 <TextField
                     required
-                    id="standard-name"
-                    label="Course Name"
+                    id="standard-email"
+                    label="email"
                     className={classes.textField}
-                    defaultValue={data?loginOrSignup(data.Name, mode):null}
-                    onChange={this.handleChange('name')}
-                    margin="normal"
-                />
-                <TextField
-                    id="standard-description"
-                    label="Description"
-                    defaultValue={data?loginOrSignup(data.Description, mode):null}
-                    className={classes.textField}
-                    onChange={this.handleChange('description')}
-                    margin="normal"
-                />
-                <TextField
-                    required
-                    id="standard-price"
-                    label="Price"
-                    defaultValue={data?loginOrSignup(data.Price, mode):null}
-                    className={classes.textField}
-                    onChange={this.handleChange('price')}
+                    onChange={this.handleChange('email')}
                     margin="normal"
                 />
                 <TextField
                     required
-                    id="standard-max-students"
-                    label="Max Students"
-                    defaultValue={data?loginOrSignup(data.MaxStudents, mode):null}
+                    id="standard-password"
+                    label="password"
                     className={classes.textField}
-                    onChange={this.handleChange('maxStudents')}
+                    onChange={this.handleChange('password')}
                     margin="normal"
                 />
-                <TextField
-                    required
-                    id="standard-available-seats"
-                    label="Available seats"
-                    defaultValue={data?loginOrSignup(data.AvailableSeats, mode):null}
-                    className={classes.textField}
-                    onChange={this.handleChange('availableSeats')}
-                    margin="normal"
-                />
-                <TextField
-                    id="standard-image-ref"
-                    label="Image Ref"
-                    defaultValue={data?loginOrSignup(data.ImageRef, mode):null}
-                    className={classes.textField}
-                    onChange={this.handleChange('imageRef')}
-                    margin="normal"
-                />
-                {mode === 'delete' ?
-                    <p>Are you sure you want to delete this course?</p>
-                    :null
-                }
-                {mode === 'edit'?
-                <Button type="submit" color="primary">Update</Button>
-                : mode === 'add'?
-                <Button type="submit" color="primary">Create</Button>
-                :
-                <Button type="submit" color="primary">Delete</Button>
+                {mode === 'signup' ?
+                    <Button color="primary" onClick={this.getVerifyCode}>Get code</Button>
+                    : null}
+                {mode === 'signup' ?
+                    <Button type="submit" color="primary">Sign up</Button>
+                    :
+                    <Button type="submit" color="primary">Login</Button>
                 }
             </form>
         );
     }
 }
 
-CourseForm.propTypes = {
+LoginForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(CourseForm);
+export default withStyles(styles)(LoginForm);

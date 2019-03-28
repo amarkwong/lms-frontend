@@ -1,71 +1,89 @@
-import {takeEvery, takeLatest, take, call, put, fork} from 'redux-saga/effects';
+import { takeEvery, takeLatest, take, call, put, fork } from 'redux-saga/effects';
 import * as actions from '../actions/users';
-import * as api from '../api/users';
+import * as api from '../api/auth';
 
-function* getUsers(){
-	try {
+function* getCurrentUser() {
+    try {
         const result = yield call(api.getUsers);
-		yield put(actions.getUsersSuccess({
-			items: result.data 
+        yield put(actions.getCurrentUserSuccess({
+            items: result.data
         }));
-	}catch(e){
+    } catch (e) {
         yield put(actions.usersError({
             error: 'An error occurred when trying to get the users'
         }));
-	}
+    }
 }
 
-function* watchGetUsersRequest(){
-	yield takeEvery(actions.Types.GET_USERS_REQUEST, getUsers);
+function* watchGetCurrentUserRequest() {
+    yield takeEvery(actions.Types.GET_USERS_REQUEST, getCurrentUser);
 }
 
-function* deleteUser(userId){
-    try{
+function* deleteUser(userId) {
+    try {
         yield call(api.deleteUser, userId);
 
-        yield call(getUsers);
-    }catch(e){
+        yield call(getCurrentUser);
+    } catch (e) {
         yield put(actions.usersError({
             error: 'An error occurred when trying to delete the user'
         }));
-	}
+    }
 }
 
-function* watchDeleteUserRequest(){
-    while(true){
-        const {payload} = yield take(actions.Types.DELETE_USER_REQUEST);
+function* watchDeleteUserRequest() {
+    while (true) {
+        const { payload } = yield take(actions.Types.DELETE_USER_REQUEST);
         yield call(deleteUser, payload.userId);
     }
 }
 
-function* createUser({payload}){
-    try{
-        const returnvalue = yield call(api.createUser, {
-            Name: payload.name,
-            Description: payload.description,
-            Price: payload.price,
-            MaxStudents: payload.maxStudents,
-            AvailableSeats: payload.availableSeats,
-            ImageRef: payload.imageRef,
-        });
+function* createUser({ payload }) {
+    try {
+        console.log('SIGNUP fired');
+        yield call(api.signUp, 
+            payload.email,
+            payload.password
+        );
+        yield call(getCurrentUser);
 
-        yield call(getUsers);
-
-    }catch(e){
+    } catch (e) {
         yield put(actions.usersError({
             error: 'An error occurred when trying to create the user'
         }));
     }
 }
-
-function* watchCreateUserRequest(){
+function* watchCreateUserRequest() {
     yield takeLatest(actions.Types.CREATE_USER_REQUEST, createUser);
 }
 
+
+
+function* updateCurrentUser({ payload }) {
+    try {
+        yield call(api.createUser, {
+            Name: payload.email,
+            Password: payload.password,
+            Role: payload.role,
+        });
+
+        yield call(getCurrentUser);
+
+    } catch (e) {
+        yield put(actions.usersError({
+            error: 'An error occurred when trying to create the user'
+        }));
+    }
+}
+function* watchUpdateCurrentUserRequest() {
+    yield takeLatest(actions.Types.CREATE_USER_REQUEST, updateCurrentUser);
+}
+
 const userSagas = [
-	fork(watchGetUsersRequest),
-	fork(watchDeleteUserRequest),
-	fork(watchCreateUserRequest)
+    fork(watchGetCurrentUserRequest),
+    fork(watchUpdateCurrentUserRequest),
+    fork(watchDeleteUserRequest),
+    fork(watchCreateUserRequest)
 ];
 
 export default userSagas;

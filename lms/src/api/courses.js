@@ -20,6 +20,7 @@ export function fetchCourseById(id){
 }
 
 export function createCourse(course){
+    console.log('COURSE API FIRED');
     return axios.post('/course',course);
 }
 

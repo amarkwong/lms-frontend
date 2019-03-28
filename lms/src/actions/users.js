@@ -1,21 +1,19 @@
 export const Types = {
-    GET_USERS_REQUEST: 'users/get_users_request',
-    GET_USERS_SUCCESS: 'users/get_users_success',
+    GET_CURRENT_USER_REQUEST: 'users/get_current_user_request',
+    GET_CURRENT_USER_SUCCESS: 'users/get_current_user_success',
     DELETE_USER_REQUEST: 'users/delete_user_request',
     CREATE_USER_REQUEST: 'users/create_user_request',
     UPDATE_USER_REQUEST: 'users/update_user_request',
     USERS_ERROR: 'users/user_error'
   };
   
-  export const getUsersRequest = () => ({
-      type: Types.GET_USERS_REQUEST
+  export const getCurrentUserRequest = () => ({
+      type: Types.GET_CURRENT_USER_REQUEST
   });
   
-  export const getUsersSuccess = ({items}) => ({
-      type: Types.GET_USERS_SUCCESS,
-      payload: {
-          items
-      }
+  export const getCurrentUserSuccess = (user) => ({
+      type: Types.GET_CURRENT_USER_SUCCESS,
+      payload: user,
   });
   
   export const createUserRequest = (user) => ({

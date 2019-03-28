@@ -57,6 +57,24 @@ class LoginModal extends React.Component {
     this.setState({ open: false });
   };
 
+
+  handleGetCurrentUserSubmit = ({ email, password }) => {
+    this.props.getCurrentUser({
+      email,
+      password,
+    });
+  };
+
+  handleCreateUserSubmit = ({ email, password, phone, verifycode, }) => {
+    console.log('MODAL signup fired');
+    this.props.createUserRequest({
+      email,
+      password,
+      phone,
+      verifycode
+    })
+  }
+
   render() {
     const { classes, open, data } = this.props;
     console.log('MODAL open',open);
@@ -85,6 +103,7 @@ LoginModal.propTypes = {
 // We need an intermediary variable for handling the recursive nesting.
 const LoginModalWrapped = withStyles(styles)(LoginModal);
 
-export default connect(({ courses }) => ({ courses }), {
+export default connect(({ user }) => ({ user }), {
+
 })(LoginModalWrapped);
 // export default connect(LoginModalWrapped;

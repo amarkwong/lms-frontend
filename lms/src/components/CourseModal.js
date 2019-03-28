@@ -61,6 +61,7 @@ class CourseModal extends React.Component {
   };
 
   handleCreateCourseSubmit = ({ name, description, price, maxStudents, availableSeats, imageRef }) => {
+    console.log('COURSE MODAL FIRED');
     this.props.createCourseRequest({
       name,
       description,

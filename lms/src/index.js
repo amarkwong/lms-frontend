@@ -29,7 +29,6 @@ sagaMiddleware.run(rootSaga);
 
 
 ReactDOM.render(<Provider store={store}>
-  {/* <Router> */}
 
   <Router history={history}>
     <App />
