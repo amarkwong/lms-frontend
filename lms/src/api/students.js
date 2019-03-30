@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React from 'react';
-import {fetchCourses} from  './course';
+import {getCourses} from  './courses';
 import {getUserRoleId} from  './auth';
-import {MDBBtn} from 'mdbreact';
 
 const _transform = course=>{};
 
@@ -43,30 +42,30 @@ export function dropCourse(courseId,studentId){
     return axios.delete('/StudentEnroll?',{'courseId':courseId,'studentId':studentId});
 }
 
-export function fetchCoursesOfStudent(){
-        var courses;
-        var rows;
-        courses= fetchCourses().then(response =>(response.data));
-        for (let i=0; i<courses.length; i++)
-        {
-            let course = courses.slice(i,i+1);
-            if ( isEnrolled(course.ID,getUserRoleId()) !== null) {
-              var enrollButton={'enroll': <MDBBtn color="default" rounded disable size="sm">Enroll</MDBBtn>}
-            }else{
-              enrollButton={'enroll': <MDBBtn color="default" rounded size="sm">Enroll</MDBBtn>}
-            }
-            let row={
-              'id': course.ID,
-              'courseName': course.Name,
-              'maxSeats': course.MaxStudent,
-              'availableSeats': course.AvailableSeats,
-              enrollButton, 
-            }
-            rows.push(row);
-          }
-        console.log('rows data',rows);
-    return rows;
-}
+// export function getCoursesOfStudent(){
+//         var courses;
+//         var rows;
+//         courses= getCourses().then(response =>(response.data));
+//         for (let i=0; i<courses.length; i++)
+//         {
+//             let course = courses.slice(i,i+1);
+//             if ( isEnrolled(course.ID,getUserRoleId()) !== null) {
+//               var enrollButton={'enroll': <MDBBtn color="default" rounded disable size="sm">Enroll</MDBBtn>}
+//             }else{
+//               enrollButton={'enroll': <MDBBtn color="default" rounded size="sm">Enroll</MDBBtn>}
+//             }
+//             let row={
+//               'id': course.ID,
+//               'courseName': course.Name,
+//               'maxSeats': course.MaxStudent,
+//               'availableSeats': course.AvailableSeats,
+//               enrollButton, 
+//             }
+//             rows.push(row);
+//           }
+//         console.log('rows data',rows);
+//     return rows;
+// }
 export function isEnrolled(courseId,studentId){
     return axios.get(`/student/isEnrolled/${courseId},${studentId}`).then(response=>(response.data)); 
 }

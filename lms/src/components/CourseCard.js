@@ -69,8 +69,6 @@ class CourseCard extends React.Component {
 
     render() {
         const { classes, mode, data } = this.props;
-        console.log('CARD', data);
-        console.log('CARD MODE', mode);
         return (
             <Card className={classes.card}>
                 <CardHeader

@@ -4,7 +4,7 @@ import * as api from '../api/students';
 
 function* getStudents(){
 	try {
-        const result = yield call(api.getStudents);
+        const result = yield call(api.fetchStudents);
 		yield put(actions.getStudentsSuccess({
 			items: result.data 
         }));
@@ -19,24 +19,24 @@ function* watchGetStudentsRequest(){
 	yield takeEvery(actions.Types.GET_STUDENTS_REQUEST, getStudents);
 }
 
-function* deleteStudent(studentId){
-    try{
-        yield call(api.deleteStudent, studentId);
+// function* deleteStudent(studentId){
+//     try{
+//         yield call(api.deleteStudent, studentId);
 
-        yield call(getStudents);
-    }catch(e){
-        yield put(actions.studentsError({
-            error: 'An error occurred when trying to delete the student'
-        }));
-	}
-}
+//         yield call(getStudents);
+//     }catch(e){
+//         yield put(actions.studentsError({
+//             error: 'An error occurred when trying to delete the student'
+//         }));
+// 	}
+// }
 
-function* watchDeleteStudentRequest(){
-    while(true){
-        const {payload} = yield take(actions.Types.DELETE_STUDENT_REQUEST);
-        yield call(deleteStudent, payload.studentId);
-    }
-}
+// function* watchDeleteStudentRequest(){
+//     while(true){
+//         const {payload} = yield take(actions.Types.DELETE_STUDENT_REQUEST);
+//         yield call(deleteStudent, payload.studentId);
+//     }
+// }
 
 function* createStudent({payload}){
     try{
@@ -64,7 +64,7 @@ function* watchCreateStudentRequest(){
 
 const studentSagas = [
 	fork(watchGetStudentsRequest),
-	fork(watchDeleteStudentRequest),
+	// fork(watchDeleteStudentRequest),
 	fork(watchCreateStudentRequest)
 ];
 

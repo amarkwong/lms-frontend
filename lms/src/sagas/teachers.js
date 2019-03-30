@@ -4,7 +4,7 @@ import * as api from '../api/teachers';
 
 function* getTeachers(){
 	try {
-        const result = yield call(api.getTeachers);
+        const result = yield call(api.fetchLecturers);
 		yield put(actions.getTeachersSuccess({
 			items: result.data 
         }));
@@ -19,28 +19,28 @@ function* watchGetTeachersRequest(){
 	yield takeEvery(actions.Types.GET_TEACHERS_REQUEST, getTeachers);
 }
 
-function* deleteTeacher(teacherId){
-    try{
-        yield call(api.deleteTeacher, teacherId);
+// function* deleteTeacher(teacherId){
+//     try{
+//         yield call(api.deleteTeacher, teacherId);
 
-        yield call(getTeachers);
-    }catch(e){
-        yield put(actions.teachersError({
-            error: 'An error occurred when trying to delete the teacher'
-        }));
-	}
-}
+//         yield call(getTeachers);
+//     }catch(e){
+//         yield put(actions.teachersError({
+//             error: 'An error occurred when trying to delete the teacher'
+//         }));
+// 	}
+// }
 
-function* watchDeleteTeacherRequest(){
-    while(true){
-        const {payload} = yield take(actions.Types.DELETE_TEACHER_REQUEST);
-        yield call(deleteTeacher, payload.teacherId);
-    }
-}
+// function* watchDeleteTeacherRequest(){
+//     while(true){
+//         const {payload} = yield take(actions.Types.DELETE_TEACHER_REQUEST);
+//         yield call(deleteTeacher, payload.teacherId);
+//     }
+// }
 
 function* createTeacher({payload}){
     try{
-        const returnvalue = yield call(api.createTeacher, {
+        const returnvalue = yield call(api.createLecturer, {
             Name: payload.name,
             Description: payload.description,
             Price: payload.price,
@@ -64,7 +64,7 @@ function* watchCreateTeacherRequest(){
 
 const teacherSagas = [
 	fork(watchGetTeachersRequest),
-	fork(watchDeleteTeacherRequest),
+	// fork(watchDeleteTeacherRequest),
 	fork(watchCreateTeacherRequest)
 ];
 

@@ -12,7 +12,8 @@ import LoginForm from './LoginForm';
 
 import {
   getCurrentUserRequest,
-  createUserRequest,
+  loginRequest,
+  signupRequest,
 } from '../actions/users'
 
 function TabContainer({ children, dir }) {
@@ -41,18 +42,15 @@ class FullWidthTabs extends React.Component {
     value: 0,
   };
 
-  handleGetCurrentUserSubmit = ({ email, password }) => {
-    this.props.getCurrentUser({
+  handleLoginSubmit = ({ email, password }) => {
+    this.props.Login({
       email,
       password,
     });
   };
 
-  handleCreateUserSubmit = ({ email, password, phone, verifycode, }) => {
-    console.log('Tab create user fired');
-    console.log(email,password,phone,verifycode);
-    console.log(this.props.createUserRequest);
-    this.props.createUserRequest({
+  handleSignupSubmit = ({ email, password, phone, verifycode, }) => {
+    this.props.SignupRequest({
       email,
       password,
       phone,
@@ -89,8 +87,8 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-        <LoginForm mode='login' onSubmit={this.handleGetCurrentUserSubmit}></LoginForm>
-        <LoginForm mode='signup' onSubmit={this.handleCreateUserSubmit}></LoginForm>
+        <LoginForm mode='login' onSubmit={this.handleLoginSubmit}></LoginForm>
+        <LoginForm mode='signup' onSubmit={this.handleSignupSubmit}></LoginForm>
         </SwipeableViews>
       </div>
     );
@@ -103,6 +101,7 @@ FullWidthTabs.propTypes = {
 };
 
 export default connect(({ user }) => ({ user }), {
+  loginRequest,
   getCurrentUserRequest,
-  createUserRequest,
+  signupRequest,
 })(withStyles(styles, { withTheme: true })(FullWidthTabs));

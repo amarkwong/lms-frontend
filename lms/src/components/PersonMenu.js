@@ -10,8 +10,9 @@ import LoginTab from './LoginTab';
 import { connect } from 'react-redux';
 
 import {
+  loginRequest,
   getCurrentUserRequest,
-  createUserRequest,
+  signupRequest,
 } from '../actions/users';
 
 const styles = {
@@ -38,7 +39,7 @@ class PersonMenu extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null });
+    this.setState({ anchorEl: null,showLogin: false });
   };
 
   handleLogin = () => {
@@ -68,7 +69,8 @@ class PersonMenu extends React.Component {
           <MenuItem onClick={this.handleLogin}>Login/Signup</MenuItem>
           <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
         </Menu>
-        {this.state.showLogin && <LoginModal open={this.state.showLogin}></LoginModal>}
+      {this.state.showLogin && <LoginModal open={this.state.showLogin} onClose={this.state.handleClose}></LoginModal>}
+      {/* {this.state.showLogin && <LoginModal open={this.state.showLogin} onClo></LoginModal>} */}
         {/* <LoginModal open={this.state.showLogin}/> */}
         {/* <LoginTab></LoginTab> */}
       </div>
@@ -81,6 +83,7 @@ PersonMenu.propTypes = {
 }
 
 export default connect(({ user }) => ({ user }), {
+  loginRequest,
   getCurrentUserRequest,
-  createUserRequest,
+  signupRequest,
 })(withStyles(styles)(PersonMenu));

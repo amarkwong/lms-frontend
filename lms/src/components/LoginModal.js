@@ -58,16 +58,16 @@ class LoginModal extends React.Component {
   };
 
 
-  handleGetCurrentUserSubmit = ({ email, password }) => {
-    this.props.getCurrentUser({
+  handleLoginSubmit = ({ email, password }) => {
+    this.props.Login({
       email,
       password,
     });
   };
 
-  handleCreateUserSubmit = ({ email, password, phone, verifycode, }) => {
+  handleSignupSubmit = ({ email, password, phone, verifycode, }) => {
     console.log('MODAL signup fired');
-    this.props.createUserRequest({
+    this.props.SignupRequest({
       email,
       password,
       phone,

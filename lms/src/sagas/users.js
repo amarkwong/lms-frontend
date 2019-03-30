@@ -4,9 +4,9 @@ import * as api from '../api/auth';
 
 function* getCurrentUser() {
     try {
-        const result = yield call(api.getUsers);
+        const result = yield call(api.getCurrentUser);
         yield put(actions.getCurrentUserSuccess({
-            items: result.data
+            user: result.data
         }));
     } catch (e) {
         yield put(actions.usersError({
@@ -16,27 +16,44 @@ function* getCurrentUser() {
 }
 
 function* watchGetCurrentUserRequest() {
-    yield takeEvery(actions.Types.GET_USERS_REQUEST, getCurrentUser);
+    yield takeLatest(actions.Types.GET_USERS_REQUEST, getCurrentUser);
 }
 
-function* deleteUser(userId) {
+function* logIn() {
     try {
-        yield call(api.deleteUser, userId);
-
-        yield call(getCurrentUser);
+        yield call(api.logIn);
+        const result = yield call(api.getCurrentUser);
+        yield put(actions.getCurrentUserSuccess({
+            user: result.data
+        }));
     } catch (e) {
         yield put(actions.usersError({
-            error: 'An error occurred when trying to delete the user'
+            error: 'An error occurred when trying to login'
         }));
     }
 }
 
-function* watchDeleteUserRequest() {
-    while (true) {
-        const { payload } = yield take(actions.Types.DELETE_USER_REQUEST);
-        yield call(deleteUser, payload.userId);
-    }
+function* watchLogInRequest() {
+    yield takeLatest(actions.Types.LOGIN_REQUEST, logIn);
 }
+// function* deleteUser(userId) {
+//     try {
+//         yield call(api.deleteUser, userId);
+
+//         yield call(getCurrentUser);
+//     } catch (e) {
+//         yield put(actions.usersError({
+//             error: 'An error occurred when trying to delete the user'
+//         }));
+//     }
+// }
+
+// function* watchDeleteUserRequest() {
+//     while (true) {
+//         const { payload } = yield take(actions.Types.DELETE_USER_REQUEST);
+//         yield call(deleteUser, payload.userId);
+//     }
+// }
 
 function* createUser({ payload }) {
     try {
@@ -61,7 +78,7 @@ function* watchCreateUserRequest() {
 
 function* updateCurrentUser({ payload }) {
     try {
-        yield call(api.createUser, {
+        yield call(api.signUp, {
             Name: payload.email,
             Password: payload.password,
             Role: payload.role,
@@ -82,8 +99,9 @@ function* watchUpdateCurrentUserRequest() {
 const userSagas = [
     fork(watchGetCurrentUserRequest),
     fork(watchUpdateCurrentUserRequest),
-    fork(watchDeleteUserRequest),
-    fork(watchCreateUserRequest)
+    // fork(watchDeleteUserRequest),
+    fork(watchCreateUserRequest),
+    fork(watchLogInRequest),
 ];
 
 export default userSagas;
