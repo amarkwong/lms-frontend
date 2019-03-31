@@ -20,6 +20,7 @@ export function logIn(username, password) {
   //the web can only provide studentj signup
   export function signUp(username,password){
     //register new student
+    console.log('API Signup fired' );
     axios.post('/student',{'Name':username});
 
     axios.post('/register',{'Name':username,'Password':password,'Role':'Student'}).then(result => {

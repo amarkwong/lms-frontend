@@ -47,7 +47,7 @@ class Course extends React.Component {
                     {/* <CourseCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg" mode='edit'></CourseCard> */}
                     {/* <CourseCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg" mode='delete'></CourseCard> */}
             </Grid>
-            <AdminMenu></AdminMenu>
+            <AdminMenu page='Course'></AdminMenu>
             </div>
         );
     }

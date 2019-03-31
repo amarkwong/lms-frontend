@@ -10,7 +10,7 @@ function* getCurrentUser() {
         }));
     } catch (e) {
         yield put(actions.usersError({
-            error: 'An error occurred when trying to get the users'
+            error: 'An error occurred when trying to get the current user'
         }));
     }
 }
@@ -55,7 +55,26 @@ function* watchLogInRequest() {
 //     }
 // }
 
-function* createUser({ payload }) {
+// function* createUser({ payload }) {
+//     try {
+//         console.log('SIGNUP fired');
+//         yield call(api.signUp, 
+//             payload.email,
+//             payload.password
+//         );
+//         yield call(getCurrentUser);
+
+//     } catch (e) {
+//         yield put(actions.usersError({
+//             error: 'An error occurred when trying to create the user'
+//         }));
+//     }
+// }
+// function* watchCreateUserRequest() {
+//     yield takeLatest(actions.Types.CREATE_USER_REQUEST, createUser);
+// }
+
+function* signUp({ payload }) {
     try {
         console.log('SIGNUP fired');
         yield call(api.signUp, 
@@ -70,8 +89,8 @@ function* createUser({ payload }) {
         }));
     }
 }
-function* watchCreateUserRequest() {
-    yield takeLatest(actions.Types.CREATE_USER_REQUEST, createUser);
+function* watchSignupRequest() {
+    yield takeLatest(actions.Types.SIGNUP_REQUEST, signUp);
 }
 
 
@@ -100,7 +119,7 @@ const userSagas = [
     fork(watchGetCurrentUserRequest),
     fork(watchUpdateCurrentUserRequest),
     // fork(watchDeleteUserRequest),
-    fork(watchCreateUserRequest),
+    fork(watchSignupRequest),
     fork(watchLogInRequest),
 ];
 

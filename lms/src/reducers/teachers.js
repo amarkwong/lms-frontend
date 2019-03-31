@@ -1,7 +1,8 @@
 import {Types} from '../actions/teachers';
 
 const INITIAL_STATE = {
-    items: []
+    items: [],
+    mode:''
 };
 
 export default function teachers(state = INITIAL_STATE, action) {

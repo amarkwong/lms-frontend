@@ -69,7 +69,7 @@ class PersonMenu extends React.Component {
           <MenuItem onClick={this.handleLogin}>Login/Signup</MenuItem>
           <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
         </Menu>
-      {this.state.showLogin && <LoginModal open={this.state.showLogin} onClose={this.state.handleClose}></LoginModal>}
+      {/* {this.state.showLogin && <LoginModal open={this.state.showLogin} onClose={this.state.handleClose}></LoginModal>} */}
       {/* {this.state.showLogin && <LoginModal open={this.state.showLogin} onClo></LoginModal>} */}
         {/* <LoginModal open={this.state.showLogin}/> */}
         {/* <LoginTab></LoginTab> */}

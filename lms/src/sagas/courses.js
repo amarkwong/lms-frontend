@@ -20,7 +20,6 @@ function* watchGetCoursesRequest(){
 }
 
 function* deleteCourse(payload){
-    console.log('SAGA delete',payload.id);
     try{
         yield call(api.deleteCourse, payload.id);
 

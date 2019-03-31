@@ -30,12 +30,13 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar className="App-Navbar"></NavBar>
+        {/* <NavBar></NavBar> */}
         <Switch>
             <Route path='/home' exact component={Home} />
             <Route path='/login' exact component={Login} />
             <Route path='/courses' exact component={Courses} />
             <Route path='/students' exact component={Students} />
-            <Route path='Teachers' exact component={Teachers} />
+            <Route path='/teachers' exact component={Teachers} />
           </Switch>
       </div>
     );

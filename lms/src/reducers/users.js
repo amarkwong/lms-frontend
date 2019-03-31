@@ -13,19 +13,32 @@ export default function users(state = INITIAL_STATE, action) {
                 user: action.payload
             }
         }
-        case Types.CREATE_USER_REQUEST:{
+        case Types.SIGNUP_REQUEST:{
             console.log('REDUCER signup');
             return {
                 ...state,
                 user: action.payload
             }
         }
-        case Types.CREATE_USER_SUCCESS:{
+        case Types.SIGNUP_SUCCESS:{
             return {
                 ...state,
                 user: action.payload.user
             }
         }
+        // case Types.CREATE_USER_REQUEST:{
+        //     console.log('REDUCER signup');
+        //     return {
+        //         ...state,
+        //         user: action.payload
+        //     }
+        // }
+        // case Types.CREATE_USER_SUCCESS:{
+        //     return {
+        //         ...state,
+        //         user: action.payload.user
+        //     }
+        // }
         case Types.USERS_ERROR: {
             return {
                 ...state,

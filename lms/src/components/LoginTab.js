@@ -43,14 +43,14 @@ class FullWidthTabs extends React.Component {
   };
 
   handleLoginSubmit = ({ email, password }) => {
-    this.props.Login({
+    this.props.loginRequest({
       email,
       password,
     });
   };
 
   handleSignupSubmit = ({ email, password, phone, verifycode, }) => {
-    this.props.SignupRequest({
+    this.props.signupRequest({
       email,
       password,
       phone,

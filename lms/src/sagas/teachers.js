@@ -4,10 +4,13 @@ import * as api from '../api/teachers';
 
 function* getTeachers(){
 	try {
+        console.log('SAGA',' teacher fired')
         const result = yield call(api.fetchLecturers);
+        console.log('SAGA', result)
 		yield put(actions.getTeachersSuccess({
-			items: result.data 
+			items: result
         }));
+
 	}catch(e){
         yield put(actions.teachersError({
             error: 'An error occurred when trying to get the teachers'

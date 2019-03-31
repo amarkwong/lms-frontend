@@ -6,17 +6,24 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import teal from '@material-ui/core/colors/teal';
 
 import PersonMenu from './PersonMenu';
 
 const styles = {
   root: {
     flexGrow: 1,
+  //   color: teal[200],
+  // backgroundColor: teal[200],
   },
   grow: {
     flexGrow: 1,
   },
+  palette: {
+    primary: teal[800],
+  },
   color: 'inherit',
+  // color: teal[200],
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -27,7 +34,7 @@ function NavBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{backgroundColor:'#2bbbad'}} >
         <Toolbar>
           <Typography variant="h6" color="inherit" className={classes.grow}>
             MindCan

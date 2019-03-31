@@ -4,7 +4,9 @@ export const Types = {
     DELETE_TEACHER_REQUEST: 'teachers/delete_teacher_request',
     CREATE_TEACHER_REQUEST: 'teachers/create_teacher_request',
     UPDATE_TEACHER_REQUEST: 'teachers/update_teacher_request',
-    TEACHERS_ERROR: 'teachers/teacher_error'
+    TEACHERS_ERROR: 'teachers/teacher_error',
+    SET_MODE: 'teachers/set_mode',
+    GET_MODE: 'teachers/get_mode',
   };
   
   export const getTeachersRequest = () => ({
@@ -27,6 +29,14 @@ export const Types = {
       type: Types.UPDATE_TEACHER_REQUEST,
       payload: teacher,
   });
+  
+  export const setMode = (mode) => ({
+      type: Types.SET_MODE,
+      payload: mode,
+  })
+  export const getMode = () => ({
+      type: Types.GET_MODE
+  })
   
   
   export const deleteTeacherRequest = (teacherId) => ({

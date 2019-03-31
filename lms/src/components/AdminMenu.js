@@ -12,6 +12,7 @@ import { setMode } from '../actions/courses';
 
 
 import CourseModal from './CourseModal';
+import TeacherModal from './TeacherModal';
 
 const styles = {
     root: {
@@ -51,7 +52,7 @@ class LabelBottomNavigation extends React.Component {
 
 
     render() {
-        const { classes } = this.props;
+        const { classes,page } = this.props;
         const { value } = this.state;
 
         return (
@@ -59,7 +60,12 @@ class LabelBottomNavigation extends React.Component {
                 <BottomNavigation value={value} onChange={this.handleChange} className={classes.root}>
                     <BottomNavigationAction label="Edit Mode" value="Edit" onClick={this.editMode} icon={<EditIcon />} />
                     {/* <BottomNavigationAction label="Add Mode" value="Add" onClick={this.addMode} icon={<AddIcon />} /> */}
-                    <CourseModal modalType='add' value="add"></CourseModal>
+                    {page === 'Course'? 
+                    <CourseModal modalType='add' value="add"></CourseModal>:
+                    page === 'Teacher'?
+                    <TeacherModal modalType='add' value="add"></TeacherModal>:
+                    null
+                    }
                     <BottomNavigationAction label="Delete Mode" value="Delete" onClick={this.deleteMode} icon={<DeleteIcon />} />
                 </BottomNavigation>
             </Grid>
