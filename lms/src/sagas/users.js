@@ -5,8 +5,9 @@ import * as api from '../api/auth';
 function* getCurrentUser() {
     try {
         const result = yield call(api.getCurrentUser);
+        console.log('SAGA',result)
         yield put(actions.getCurrentUserSuccess({
-            user: result.data
+            user: result
         }));
     } catch (e) {
         yield put(actions.usersError({
@@ -16,7 +17,7 @@ function* getCurrentUser() {
 }
 
 function* watchGetCurrentUserRequest() {
-    yield takeLatest(actions.Types.GET_USERS_REQUEST, getCurrentUser);
+    yield takeLatest(actions.Types.GET_CURRENT_USER_REQUEST, getCurrentUser);
 }
 
 function* logIn() {

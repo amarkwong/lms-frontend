@@ -7,10 +7,18 @@ const INITIAL_STATE = {
 export default function users(state = INITIAL_STATE, action) {
     console.log('REDUCER',action.type);
     switch (action.type) {
-        case Types.GET_CURRENT_USER_SUCCESS:{
+        case Types.GET_CURRENT_USER_REQUEST:{
+            // console.log('REDUCER request payload',action.payload);
             return {
                 ...state,
                 user: action.payload
+            }
+        }
+        case Types.GET_CURRENT_USER_SUCCESS:{
+            // console.log('REDUCER success payload',action.payload);
+            return {
+                ...state,
+                user: action.payload.user
             }
         }
         case Types.SIGNUP_REQUEST:{

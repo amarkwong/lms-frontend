@@ -51,12 +51,15 @@ export function logIn(username, password) {
 
 
   export function getCurrentUser (){
+    console.log('API, get cur user fired')
     const guest = {
       userId: 0,
       role: 'guest',
       username: 'unknown'
     }
     const loginStatus = isLoggedIn();
+    console.log('API,', loginStatus)
+    console.log('API,', guest)
     return loginStatus? {
       userId: localStorage.getItem('userId'),
       role:localStorage.getItem('userRole'),

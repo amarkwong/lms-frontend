@@ -42,10 +42,16 @@ export const Types = {
           userId
       }
   });
-  
+ 
+  const guest = {
+    userId: 0,
+    role: 'guest',
+    username: 'unknown'
+  }
   export const usersError = ({error}) => ({
       type: Types.USERS_ERROR,
       payload: {
+          user:guest,
           error
       }
   });
