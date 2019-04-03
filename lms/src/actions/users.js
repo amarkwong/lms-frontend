@@ -3,6 +3,8 @@ export const Types = {
     GET_CURRENT_USER_SUCCESS: 'users/get_current_user_success',
     LOGIN_REQUEST: 'user/login_request',
     LOGIN_SUCESS: 'user/login_success',
+    LOGOUT_REQUEST: 'user/logout_request',
+    LOGOUT_SUCESS: 'user/logout_success',
     SIGNUP_REQUEST: 'user/signup_request',
     SIGNUP_SUCESS: 'user/signup_success',
     DELETE_USER_REQUEST: 'users/delete_user_request',
@@ -24,6 +26,11 @@ export const Types = {
       type: Types.LOGIN_REQUEST,
       payload: user,
   });
+
+  export const logoutRequest = (user) => ({
+      type: Types.LOGIN_REQUEST,
+      payload: {user:guest},
+  });
   
   export const signupRequest = (user) => ({
       type: Types.SIGNUP_REQUEST,
@@ -35,6 +42,7 @@ export const Types = {
       payload: user,
   });
   
+
   
   export const deleteUserRequest = (userId) => ({
       type: Types.DELETE_USER_REQUEST,
@@ -48,6 +56,7 @@ export const Types = {
     role: 'guest',
     username: 'unknown'
   }
+
   export const usersError = ({error}) => ({
       type: Types.USERS_ERROR,
       payload: {

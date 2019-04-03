@@ -3,15 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import IconButton from '@material-ui/core/IconButton';
-
-import LoginForm from './LoginForm';
-import LoginTab from './LoginTab';
-import {
-} from '../actions/courses'
+import green from '@material-ui/core/colors/green';
+import CircularIntergration from './CircularIntergration';
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -38,9 +31,38 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4,
     outline: 'none',
   },
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+    },
+    wrapper: {
+      margin: theme.spacing.unit,
+      position: 'relative',
+    },
+    buttonSuccess: {
+      backgroundColor: green[500],
+      '&:hover': {
+        backgroundColor: green[700],
+      },
+    },
+    fabProgress: {
+      color: green[500],
+      position: 'absolute',
+      top: -6,
+      left: -6,
+      zIndex: 1,
+    },
+    buttonProgress: {
+      color: green[500],
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      marginTop: -12,
+      marginLeft: -12,
+    },
 });
 
-class LoginModal extends React.Component {
+class LogoutModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -78,8 +100,6 @@ class LoginModal extends React.Component {
 
   render() {
     const { classes, open, data } = this.props;
-    console.log('MODAL open',open);
-    console.log('MODAL props',this.props);
 
     return (
       <div>
@@ -90,7 +110,7 @@ class LoginModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-          <LoginTab></LoginTab>
+        <CircularIntergration></CircularIntergration>
           </div>
         </Modal>
       </div>
@@ -98,14 +118,14 @@ class LoginModal extends React.Component {
   }
 }
 
-LoginModal.propTypes = {
+LogoutModal.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const LoginModalWrapped = withStyles(styles)(LoginModal);
+const LogoutModalWrapped = withStyles(styles)(LogoutModal);
 
 export default connect(({ user }) => ({ user }), {
 
-})(LoginModalWrapped);
+})(LogoutModalWrapped);
 // export default connect(LoginModalWrapped;

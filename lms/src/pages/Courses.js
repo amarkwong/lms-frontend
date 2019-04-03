@@ -50,7 +50,7 @@ class Course extends React.Component {
         console.log('page user',this.props);
         // const { curUser } = this.state;
 
-        if (curUser.role === 'Guest') {
+        if (curUser.role === 'admin') {
             return (
                 <div>
                     <h2>Please login to see this page</h2>
@@ -63,7 +63,7 @@ class Course extends React.Component {
                         {courses.slice(0, courses.length).map(course => (
                             <CourseCard key={course.ID} mode={mode} data={course} />))}
                     </Grid>
-                   {curUser.role === 'Admin' ?
+                   {curUser.role === 'admin' ?
                    <AdminMenu page='Course'></AdminMenu>
                    :null
                    }

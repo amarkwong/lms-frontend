@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PersonIcon from '@material-ui/icons/Person';
 import LoginModal from './LoginModal';
 import LoginTab from './LoginTab';
+import LogoutModal from './LogoutModal';
 import { connect } from 'react-redux';
 
 import {
@@ -32,6 +33,7 @@ class PersonMenu extends React.Component {
   state = {
     anchorEl: null,
     showLogin: false,
+    showLogout: false,
   };
 
   handleClick = event => {
@@ -39,13 +41,28 @@ class PersonMenu extends React.Component {
   };
 
   handleClose = () => {
-    this.setState({ anchorEl: null,showLogin: false });
+    console.log('handle close')
+    this.setState({
+      anchorEl: null,
+      showLogin: false,
+      showLogout: false,
+    });
   };
 
   handleLogin = () => {
-    this.setState({ anchorEl:null,
-      showLogin: true});
+    console.log('handle login')
+    this.setState({
+      anchorEl: null,
+      showLogin: true
+    });
   };
+
+  handleLogout = () => {
+    this.setState({
+      anchorEl: null,
+      showLogout: true
+    });
+  }
 
   render() {
     const { anchorEl } = this.state;
@@ -58,7 +75,7 @@ class PersonMenu extends React.Component {
           aria-haspopup="true"
           onClick={this.handleClick}
         >
-            <PersonIcon />
+          <PersonIcon />
         </IconButton>
         <Menu
           id="simple-menu"
@@ -69,8 +86,10 @@ class PersonMenu extends React.Component {
           <MenuItem onClick={this.handleLogin}>Login/Signup</MenuItem>
           <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
         </Menu>
-      {/* {this.state.showLogin && <LoginModal open={this.state.showLogin} onClose={this.state.handleClose}></LoginModal>} */}
-      {/* {this.state.showLogin && <LoginModal open={this.state.showLogin} onClo></LoginModal>} */}
+        {this.state.showLogin && <LoginModal open={this.state.showLogin} onClose={this.handleClose}></LoginModal>}
+        {this.state.showLogout && <LogoutModal open={this.state.showLogout} onClose={this.handleClose}></LogoutModal>}
+
+        {/* {this.state.showLogin && <LoginModal open={this.state.showLogin} onClo></LoginModal>} */}
         {/* <LoginModal open={this.state.showLogin}/> */}
         {/* <LoginTab></LoginTab> */}
       </div>
