@@ -89,7 +89,6 @@ class LogoutModal extends React.Component {
   };
 
   handleSignupSubmit = ({ email, password, phone, verifycode, }) => {
-    console.log('MODAL signup fired');
     this.props.SignupRequest({
       email,
       password,

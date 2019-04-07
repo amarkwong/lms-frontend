@@ -17,15 +17,19 @@ import {
 } from '../actions/courses';
 import { getCurrentUserRequest } from '../actions/users';
 
-const styles = {
 
+import slider1 from '../images/slider-1.jpg';
+const styles = {
+    // backgroundImag: slider1,
+        // backgroundImage:  `url('${slider1}')`,
     root: {
+        // backgroundImage:  `url('${slider1}')`,
+        // backgroundImage: slider1,
         flexGrow: 1,
     },
     grow: {
         flexGrow: 1,
     },
-
     menuButton: {
         marginLeft: -12,
         marginRight: 20,
@@ -46,8 +50,9 @@ class Course extends React.Component {
         const courses = this.props.courses.items;
         const mode = this.props.courses.mode;
         const curUser = this.props.getCurrentUserRequest();
+        const courseStyle = {backgroundImage:  `url('${slider1}')`}
 
-        console.log('page user',this.props);
+        console.log('page user', this.props);
         // const { curUser } = this.state;
 
         if (curUser.role === 'admin') {
@@ -59,14 +64,15 @@ class Course extends React.Component {
         } else {
             return (
                 <div>
-                    <Grid container spacing={24} direction="row" justify="space-evenly" alignItems="flex-start" >
+                    <Grid container spacing={24} direction="row" justify="space-evenly" alignItems="flex-start" style={courseStyle}>
+                    {/* <Grid container spacing={24} direction="row" justify="space-evenly" alignItems="flex-start" > */}
                         {courses.slice(0, courses.length).map(course => (
                             <CourseCard key={course.ID} mode={mode} data={course} />))}
                     </Grid>
-                   {curUser.role === 'admin' ?
-                   <AdminMenu page='Course'></AdminMenu>
-                   :null
-                   }
+                    {curUser.role === 'admin' ?
+                        <AdminMenu page='Course'></AdminMenu>
+                        : null
+                    }
                 </div>
             );
         }
@@ -77,7 +83,7 @@ Course.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(({ courses,}) => ({ courses,}), {
+export default connect(({ courses, }) => ({ courses, }), {
     getCoursesRequest,
     createCourseRequest,
     updateCourseRequest,

@@ -12,7 +12,7 @@ import {
     deleteTeacherRequest, 
     getMode,
     teachersError } from '../actions/teachers';
-
+import slider2 from '../images/slider-2.jpg';
 
 const styles = {
     
@@ -28,6 +28,7 @@ const styles = {
         marginRight: 20,
     },
 };
+        const teacherStyle = {backgroundImage:  `url('${slider2}')`};
 
 class Teacher extends React.Component {
     constructor(props){
@@ -40,11 +41,9 @@ class Teacher extends React.Component {
         console.log('teacher page',teachers, mode);
         return (
             <div>
-            <Grid container spacing={24} direction="row" justify="space-evenly" alignItems="flex-start" >
+            <Grid container spacing={24} direction="row" justify="space-evenly" alignItems="flex-start" style={teacherStyle}>
             {teachers.slice(0,teachers.length).map(teacher => (
                     <TeacherCard key={teacher.ID} mode={mode} data={teacher}/>))}
-                    {/* <TeacherCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg" mode='edit'></TeacherCard> */}
-                    {/* <TeacherCard ImageRef="https://i.imgur.com/Ld4fkyJ.jpg" mode='delete'></TeacherCard> */}
             </Grid>
             <AdminMenu page='Teacher'></AdminMenu>
             </div>
