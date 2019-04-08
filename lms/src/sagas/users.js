@@ -20,12 +20,13 @@ function* watchGetCurrentUserRequest() {
     yield takeLatest(actions.Types.GET_CURRENT_USER_REQUEST, getCurrentUser);
 }
 
-function* logIn() {
+function* logIn({payload}) {
     try {
-        yield call(api.logIn);
+        yield call(api.logIn,payload.email,payload.password);
         const result = yield call(api.getCurrentUser);
+        console.log('SAGA login',result)
         yield put(actions.getCurrentUserSuccess({
-            user: result.data
+            user: result
         }));
     } catch (e) {
         yield put(actions.usersError({
@@ -37,43 +38,6 @@ function* logIn() {
 function* watchLogInRequest() {
     yield takeLatest(actions.Types.LOGIN_REQUEST, logIn);
 }
-// function* deleteUser(userId) {
-//     try {
-//         yield call(api.deleteUser, userId);
-
-//         yield call(getCurrentUser);
-//     } catch (e) {
-//         yield put(actions.usersError({
-//             error: 'An error occurred when trying to delete the user'
-//         }));
-//     }
-// }
-
-// function* watchDeleteUserRequest() {
-//     while (true) {
-//         const { payload } = yield take(actions.Types.DELETE_USER_REQUEST);
-//         yield call(deleteUser, payload.userId);
-//     }
-// }
-
-// function* createUser({ payload }) {
-//     try {
-//         console.log('SIGNUP fired');
-//         yield call(api.signUp, 
-//             payload.email,
-//             payload.password
-//         );
-//         yield call(getCurrentUser);
-
-//     } catch (e) {
-//         yield put(actions.usersError({
-//             error: 'An error occurred when trying to create the user'
-//         }));
-//     }
-// }
-// function* watchCreateUserRequest() {
-//     yield takeLatest(actions.Types.CREATE_USER_REQUEST, createUser);
-// }
 
 function* signUp({ payload }) {
     try {

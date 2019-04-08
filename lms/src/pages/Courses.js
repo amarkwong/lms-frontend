@@ -44,18 +44,21 @@ class Course extends React.Component {
         // }
         // const curUser = this.props.getCurrentUserRequest();
         this.props.getCoursesRequest();
+        this.props.getCurrentUserRequest();
     }
 
     render() {
         const courses = this.props.courses.items;
         const mode = this.props.courses.mode;
-        const curUser = this.props.getCurrentUserRequest();
+        // const curUser = this.props.users;
         const courseStyle = {backgroundImage:  `url('${slider1}')`}
 
-        console.log('page user', this.props);
+        // console.log('page user', curUser);
         // const { curUser } = this.state;
+        const curUser = this.props.user.user;
+        console.log('page user', curUser);
 
-        if (curUser.role === 'admin') {
+        if (curUser.role === 'guest') {
             return (
                 <div>
                     <h2>Please login to see this page</h2>
@@ -83,7 +86,7 @@ Course.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect(({ courses, }) => ({ courses, }), {
+export default connect(({ courses,user }) => ({ courses,user }), {
     getCoursesRequest,
     createCourseRequest,
     updateCourseRequest,
