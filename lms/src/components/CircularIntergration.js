@@ -56,6 +56,7 @@ class CircularIntegration extends React.Component {
   }
 
   handleButtonClick = () => {
+    this.props.logoutRequest();
     if (!this.state.loading) {
       this.setState(
         {

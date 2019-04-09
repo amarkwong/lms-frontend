@@ -54,7 +54,7 @@ function* logOut() {
 }
 
 function* watchLogOutRequest() {
-    yield takeLatest(actions.Types.LOGOUT_REQUEST, logIn);
+    yield takeLatest(actions.Types.LOGOUT_REQUEST, logOut);
 }
 
 function* signUp({ payload }) {

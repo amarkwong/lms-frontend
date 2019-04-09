@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 
 import {
   loginRequest,
+  logoutRequest,
   getCurrentUserRequest,
   signupRequest,
 } from '../actions/users';
@@ -103,6 +104,7 @@ PersonMenu.propTypes = {
 
 export default connect(({ user }) => ({ user }), {
   loginRequest,
+  logoutRequest,
   getCurrentUserRequest,
   signupRequest,
 })(withStyles(styles)(PersonMenu));

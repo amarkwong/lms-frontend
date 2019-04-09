@@ -28,8 +28,9 @@ export const Types = {
   });
 
   export const logoutRequest = (user) => ({
-      type: Types.LOGIN_REQUEST,
-      payload: {user:guest},
+      type: Types.LOGOUT_REQUEST,
+      payload: user,
+    //   payload: {user:guest},
   });
   
   export const signupRequest = (user) => ({
