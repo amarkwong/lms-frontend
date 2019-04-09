@@ -54,6 +54,7 @@ class LoginModal extends React.Component {
   };
 
   handleClose = () => {
+    console.log('HANDLE CLOSE');
     this.setState({ open: false });
     this.props.onClose();
   };
@@ -64,6 +65,7 @@ class LoginModal extends React.Component {
       email,
       password,
     });
+    this.handleClose();
   };
 
   handleSignupSubmit = ({ email, password, phone, verifycode, }) => {
@@ -74,6 +76,7 @@ class LoginModal extends React.Component {
       phone,
       verifycode
     })
+    this.handleClose();
   }
 
   render() {

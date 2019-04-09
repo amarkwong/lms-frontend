@@ -47,6 +47,9 @@ class FullWidthTabs extends React.Component {
       email,
       password,
     });
+    console.log('TAB handel login');
+    console.log('TAB props',this.props);
+    // this.props.open = false;
   };
 
   handleSignupSubmit = ({ email, password, phone, verifycode, }) => {
@@ -56,6 +59,7 @@ class FullWidthTabs extends React.Component {
       phone,
       verifycode
     })
+    this.props.handleClose();
   }
 
   handleChange = (event, value) => {

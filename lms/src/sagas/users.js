@@ -39,6 +39,24 @@ function* watchLogInRequest() {
     yield takeLatest(actions.Types.LOGIN_REQUEST, logIn);
 }
 
+function* logOut() {
+    try {
+        yield call(api.logOut);
+        const result = yield call(api.getCurrentUser);
+        yield put(actions.getCurrentUserSuccess({
+            user: result
+        }));
+    } catch (e) {
+        yield put(actions.usersError({
+            error: 'An error occurred when trying to logout'
+        }));
+    }
+}
+
+function* watchLogOutRequest() {
+    yield takeLatest(actions.Types.LOGOUT_REQUEST, logIn);
+}
+
 function* signUp({ payload }) {
     try {
         console.log('SIGNUP fired');
@@ -86,6 +104,7 @@ const userSagas = [
     // fork(watchDeleteUserRequest),
     fork(watchSignupRequest),
     fork(watchLogInRequest),
+    fork(watchLogOutRequest),
 ];
 
 export default userSagas;
