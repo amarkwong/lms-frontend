@@ -22,7 +22,8 @@ function* watchGetCurrentUserRequest() {
 
 function* logIn({payload}) {
     try {
-        yield call(api.logIn,payload.email,payload.password);
+        console.log('SAGA login',payload)
+        yield call(api.logIn,payload.username,payload.password);
         const result = yield call(api.getCurrentUser);
         console.log('SAGA login',result)
         yield put(actions.getCurrentUserSuccess({

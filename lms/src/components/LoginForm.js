@@ -44,14 +44,16 @@ class LoginForm extends React.Component {
     }
     handleChange = name => event => {
         this.setState({ [name]: event.target.value });
+        console.log('handle form', name, event.target.value);
     };
 
     handleSignupSubmit = e => {
-        console.log('FORM handle signup fired')
+        // console.log('FORM handle signup fired')
         e.preventDefault();
-        const { email, password, phone, verifycode } = this.state;
+        const { username,email, password, phone, verifycode } = this.state;
 
         this.props.onSubmit({
+            username: username,
             email: email,
             password: password,
             phone: phone,
@@ -62,7 +64,8 @@ class LoginForm extends React.Component {
 
     handleLoginSubmit = e => {
         e.preventDefault();
-        const { username, password, } = this.state;
+        console.log('login submit',this.state.username,this.state.password);
+        const { username, password } = this.state;
 
         this.props.onSubmit({
             username: username,
@@ -116,7 +119,7 @@ class LoginForm extends React.Component {
                 null}
                 <TextField
                     required
-                    id="standard-email"
+                    id="standard-username"
                     label="username"
                     className={classes.textField}
                     onChange={this.handleChange('username')}

@@ -76,13 +76,11 @@ class LoginModal extends React.Component {
       phone,
       verifycode
     })
-    this.handleClose();
+    // this.handleClose();
   }
 
   render() {
     const { classes, open, data } = this.props;
-    console.log('MODAL open',open);
-    console.log('MODAL props',this.props);
 
     return (
       <div>
