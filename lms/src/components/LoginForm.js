@@ -31,6 +31,7 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: '',
             email: '',
             password: '',
             phone: '',
@@ -60,14 +61,14 @@ class LoginForm extends React.Component {
     };
 
     handleLoginSubmit = e => {
-        console.log('FORM handle login fired')
         e.preventDefault();
-        const { email, password, } = this.state;
+        const { username, password, } = this.state;
 
         this.props.onSubmit({
-            email: email,
+            username: username,
             password: password,
         });
+        // this.props.onClose();
 
         // this.setState({
         //     email: '',
@@ -79,10 +80,10 @@ class LoginForm extends React.Component {
         const {
             classes, mode, data } = this.props;
         return (
-            <form className={classes.container} noValidate autoComplete="off" onSubmit={mode==='signup'?this.handleSignupSubmit:this.handleLoginSubmit}>
+            <form className={classes.container} noValidate autoComplete="off" onSubmit={mode === 'signup' ? this.handleSignupSubmit : this.handleLoginSubmit}>
                 {mode === 'signup' ?
                     <TextField
-                    required
+                        required
                         id="standard-phone"
                         label="phone"
                         className={classes.textField}
@@ -93,7 +94,7 @@ class LoginForm extends React.Component {
                     null}
                 {mode === 'signup' ?
                     <TextField
-                    required
+                        required
                         id="standard-verifycode`"
                         label="verifycode`"
                         className={classes.textField}
@@ -102,12 +103,23 @@ class LoginForm extends React.Component {
                     />
                     :
                     null}
+                {mode === 'signup' ?
                 <TextField
                     required
                     id="standard-email"
                     label="email"
                     className={classes.textField}
                     onChange={this.handleChange('email')}
+                    margin="normal"
+                />
+                :
+                null}
+                <TextField
+                    required
+                    id="standard-email"
+                    label="username"
+                    className={classes.textField}
+                    onChange={this.handleChange('username')}
                     margin="normal"
                 />
                 <TextField

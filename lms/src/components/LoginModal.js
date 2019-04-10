@@ -54,23 +54,23 @@ class LoginModal extends React.Component {
   };
 
   handleClose = () => {
-    console.log('HANDLE CLOSE');
     this.setState({ open: false });
     this.props.onClose();
   };
 
 
-  handleLoginSubmit = ({ email, password }) => {
+  handleLoginSubmit = ({ username, password }) => {
     this.props.Login({
-      email,
+       username,
       password,
     });
-    this.handleClose();
+    // this.handleClose();
   };
 
-  handleSignupSubmit = ({ email, password, phone, verifycode, }) => {
+  handleSignupSubmit = ({ username, email, password, phone, verifycode, }) => {
     console.log('MODAL signup fired');
     this.props.SignupRequest({
+      username,
       email,
       password,
       phone,
@@ -93,7 +93,7 @@ class LoginModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-          <LoginTab></LoginTab>
+          <LoginTab onClose={this.handleClose}></LoginTab>
           </div>
         </Modal>
       </div>

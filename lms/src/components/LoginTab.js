@@ -42,13 +42,17 @@ class FullWidthTabs extends React.Component {
     value: 0,
   };
 
+  handleClose = () =>
+  {
+    // console.log(this.props);
+    this.props.onClose()
+  }
+
   handleLoginSubmit = ({ email, password }) => {
     this.props.loginRequest({
       email,
       password,
     });
-    console.log('TAB handel login');
-    console.log('TAB props',this.props);
     // this.props.open = false;
   };
 
@@ -59,7 +63,7 @@ class FullWidthTabs extends React.Component {
       phone,
       verifycode
     })
-    this.props.handleClose();
+    // this.props.handleClose();
   }
 
   handleChange = (event, value) => {
@@ -91,8 +95,8 @@ class FullWidthTabs extends React.Component {
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-        <LoginForm mode='login' onSubmit={this.handleLoginSubmit}></LoginForm>
-        <LoginForm mode='signup' onSubmit={this.handleSignupSubmit}></LoginForm>
+        <LoginForm mode='login' onSubmit={this.handleLoginSubmit} onClose={this.handleClose}></LoginForm>
+        <LoginForm mode='signup' onSubmit={this.handleSignupSubmit} onClose={this.handleClose}></LoginForm>
         </SwipeableViews>
       </div>
     );

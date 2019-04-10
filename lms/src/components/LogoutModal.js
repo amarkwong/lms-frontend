@@ -81,22 +81,6 @@ class LogoutModal extends React.Component {
   };
 
 
-  handleLoginSubmit = ({ email, password }) => {
-    this.props.Login({
-      email,
-      password,
-    });
-  };
-
-  handleSignupSubmit = ({ email, password, phone, verifycode, }) => {
-    this.props.SignupRequest({
-      email,
-      password,
-      phone,
-      verifycode
-    })
-  }
-
   render() {
     const { classes, open, data } = this.props;
 
@@ -109,7 +93,7 @@ class LogoutModal extends React.Component {
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-        <CircularIntergration></CircularIntergration>
+        <CircularIntergration onClose={this.handleClose}></CircularIntergration>
           </div>
         </Modal>
       </div>

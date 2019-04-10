@@ -53,10 +53,15 @@ class CircularIntegration extends React.Component {
 
   componentWillUnmount() {
     clearTimeout(this.timer);
+            this.props.onClose();
+  }
+  componentDidMount(){
+            // this.props.onClose();
   }
 
   handleButtonClick = () => {
     this.props.logoutRequest();
+    // console.log('cicular',this.props);
     if (!this.state.loading) {
       this.setState(
         {
@@ -69,6 +74,7 @@ class CircularIntegration extends React.Component {
               loading: false,
               success: true,
             });
+            // this.props.onClose();
           }, 2000);
         },
       );
