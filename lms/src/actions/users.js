@@ -7,6 +7,8 @@ export const Types = {
     LOGOUT_SUCESS: 'user/logout_success',
     SIGNUP_REQUEST: 'user/signup_request',
     SIGNUP_SUCESS: 'user/signup_success',
+    VERICODE_REQUEST: 'user/vericode_request',
+    VERICODE_SUCESS: 'user/vericode_success',
     DELETE_USER_REQUEST: 'users/delete_user_request',
     CREATE_USER_REQUEST: 'users/create_user_request',
     UPDATE_USER_REQUEST: 'users/update_user_request',
@@ -36,6 +38,11 @@ export const Types = {
   export const signupRequest = (user) => ({
       type: Types.SIGNUP_REQUEST,
       payload: user,
+  });
+
+  export const vericodeRequest = (phone) => ({
+      type: Types.VERICODE_REQUEST,
+      payload: phone,
   });
   
   export const updateUserRequest = (user) => ({

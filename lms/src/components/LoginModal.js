@@ -81,7 +81,6 @@ class LoginModal extends React.Component {
 
   render() {
     const { classes, open, data } = this.props;
-
     return (
       <div>
         <Modal

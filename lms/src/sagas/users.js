@@ -5,7 +5,7 @@ import * as api from '../api/auth';
 function* getCurrentUser() {
     try {
         const result = yield call(api.getCurrentUser);
-        console.log('SAGA',result)
+        console.log('SAGA', result)
         yield put(actions.getCurrentUserSuccess({
             user: result
         }));
@@ -20,12 +20,12 @@ function* watchGetCurrentUserRequest() {
     yield takeLatest(actions.Types.GET_CURRENT_USER_REQUEST, getCurrentUser);
 }
 
-function* logIn({payload}) {
+function* logIn({ payload }) {
     try {
-        console.log('SAGA login',payload)
-        yield call(api.logIn,payload.username,payload.password);
+        console.log('SAGA login', payload)
+        yield call(api.logIn, payload.username, payload.password);
         const result = yield call(api.getCurrentUser);
-        console.log('SAGA login',result)
+        console.log('SAGA login', result)
         yield put(actions.getCurrentUserSuccess({
             user: result
         }));
@@ -61,7 +61,7 @@ function* watchLogOutRequest() {
 function* signUp({ payload }) {
     try {
         console.log('SIGNUP fired');
-        yield call(api.signUp, 
+        yield call(api.signUp,
             payload.email,
             payload.password
         );
@@ -77,7 +77,19 @@ function* watchSignupRequest() {
     yield takeLatest(actions.Types.SIGNUP_REQUEST, signUp);
 }
 
-
+function* getVericode({payload}) {
+    try {
+        console.log('VERICODE SAGA',payload)
+        yield call(api.getVericode, payload)
+    } catch (e) {
+        yield put(actions.usersError({
+            error: 'An error occurred when trying to get the vericode'
+        }));
+    }
+}
+function* watchVericodeRequest() {
+    yield takeLatest(actions.Types.VERICODE_REQUEST, getVericode);
+}
 
 function* updateCurrentUser({ payload }) {
     try {
@@ -104,6 +116,7 @@ const userSagas = [
     fork(watchUpdateCurrentUserRequest),
     // fork(watchDeleteUserRequest),
     fork(watchSignupRequest),
+    fork(watchVericodeRequest),
     fork(watchLogInRequest),
     fork(watchLogOutRequest),
 ];

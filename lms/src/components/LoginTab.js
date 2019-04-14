@@ -14,6 +14,7 @@ import {
   getCurrentUserRequest,
   loginRequest,
   signupRequest,
+  vericodeRequest,
 } from '../actions/users'
 
 function TabContainer({ children, dir }) {
@@ -113,4 +114,5 @@ export default connect(({ user }) => ({ user }), {
   loginRequest,
   getCurrentUserRequest,
   signupRequest,
+  vericodeRequest,
 })(withStyles(styles, { withTheme: true })(FullWidthTabs));

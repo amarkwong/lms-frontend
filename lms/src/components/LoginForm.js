@@ -1,8 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+
+import {
+    vericodeRequest,
+  } from '../actions/users'
 
 const styles = theme => ({
     container: {
@@ -39,8 +44,9 @@ class LoginForm extends React.Component {
         };
     }
 
-    getVerifyCode = () => {
-
+    getVericode = () => {
+        console.log('get vericode',this.state.phone)
+        this.props.vericodeRequest(this.state.phone);
     }
     handleChange = name => event => {
         this.setState({ [name]: event.target.value });
@@ -134,7 +140,7 @@ class LoginForm extends React.Component {
                     margin="normal"
                 />
                 {mode === 'signup' ?
-                    <Button color="primary" onClick={this.getVerifyCode}>Get code</Button>
+                    <Button color="primary" onClick={this.getVericode}>Get code</Button>
                     : null}
                 {mode === 'signup' ?
                     <Button type="submit" color="primary">Sign up</Button>
@@ -150,4 +156,5 @@ LoginForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoginForm);
+export default connect((vericode) => (vericode),{
+    vericodeRequest})(withStyles(styles)(LoginForm));

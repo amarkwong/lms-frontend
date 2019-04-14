@@ -1,7 +1,8 @@
 import {Types} from '../actions/users';
 
 const INITIAL_STATE = {
-    user: {}
+    user: {},
+    vericode: ''
 };
 
 export default function users(state = INITIAL_STATE, action) {
@@ -19,6 +20,13 @@ export default function users(state = INITIAL_STATE, action) {
             return {
                 ...state,
                 user: action.payload.user
+            }
+        }
+        case Types.VERICODE_REQUEST:{
+            console.log('REDUCER VERICODE',action.payload);
+            return {
+                ...state,
+                vericode: action.payload
             }
         }
         case Types.SIGNUP_REQUEST:{
