@@ -1,6 +1,7 @@
 // api/auth.js
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import qs from 'qs';
 export function logIn(username, password) {
   // we simulate the async request to login api here
   // replace it with real api call axios.post('api/login', {email, password})
@@ -121,47 +122,73 @@ export function checkValidUserName(username) {
 }
 
 
-export function getSMS(phone) {
-  sms.post();
-}
+
 
 export function getVericode(phone) {
-  console.log('API get vericode fired',phone);
-  const curToken= getToken();
-  console.log('API vericode token',curToken);
-  const b=axios.post(`/Vericode/phone?phone=${phone}`)
-  .then(response => (response.data))
-  console.log('API vericode result',b);
+  // console.log('API get vericode fired', phone);
+  const curToken = getToken();
+  console.log('API vericode token', curToken.PromiseValue);
+  const b = axios.post(`/Vericode/phone?phone=${phone}`)
+    .then(response => (response.data))
+  console.log('API vericode result', b);
+  const curSMS=getSMS(phone,'amark\'s test',curToken);
+  console.log('API vericode SMS',curSMS);
   return axios.get(`/vericode/phone?phone=${phone}`).then(response => (response.data));
 }
 
 const token = axios.create({
   baseURL: 'https://tapi.telstra.com/v2',
-  timeout: 5000,
-  headers: {
-    'Access-Control-Allow-Credentials': true
+  timeout: 2000,
+  async: true,
+  withCredentials: false,
+  crossdomain: true,
+  headers: { 
   }
 });
+// data:{
+//   grant_type: "client_credentials",
+//   scope: "NSMS",
+//   client_id: "cbqBzkfoif8gDQz1pqI09,lwL4cwcOJbo",
+//   client_secret: "Edh0fht5rmlPAz6a",
+// }
+// grant_type: "client_credentials",
 
 const sms = axios.create({
-  baseURL: 'https://tapi.telstra.com/v2/messages/sms',
+  baseURL: 'https://tapi.telstra.com/v2',
   timeout: 2000,
-  headers: { 'X-Custom-Header': 'foobar' }
+  withCredentials: false,
+  crossdomain: true,
+  // headers: {
+  //   Authorization: 'Bearer hw6YbsN838Ea0yShu1c3rmjCAwBO',
+  // }
 });
-axios.defaults.withCredentials = false;
+// axios.defaults.withCredentials = false;
 
-export function getToken() {
-  // console.log('API get token',token)
-  const a = token.post('/oauth/token',{
-    grant_type: "client_credentials",
-    scope: "NSMS",
-    client_id: "cbqBzkfoif8gDQz1pqI09lwL4cwcOJbo",
-    client_secret: "Edh0fht5rmlPAz6a",
-  },{withCredentials: false}) 
-    .then(result => { 
-      setTimeout(() => {
-        return result;
-      }, 2000)})
-    .catch(error => { console.error('api token',error); throw error; });
-  return a;
+export async function getToken() {
+  let result = await token.post('/oauth/token',
+    qs.stringify({
+      grant_type: "client_credentials",
+      scope: "NSMS",
+      client_id: "cbqBzkfoif8gDQz1pqI09lwL4cwcOJbo",
+      client_secret: "Edh0fht5rmlPAz6a",
+    })
+  ).then(res => res.data.access_token) ;
+  return result;
+  // .then(res => {return res.access_token})
+  // .catch(error => { console.error('api token', error); throw error; });
+}
+
+export function getSMS(phone, code, token) {
+  return sms.post('/messages/sms', qs.stringify({
+    to: phone,
+    validity: 60,
+    priority: false,
+    body: code
+  }),
+  qs.stringify({
+    headers: {
+    Authorization: `Bearer ${token}`,
+  }})
+  ).then(response => { console.log('sms response', response); }
+  ).catch(error => { console.error('api sms', error); throw error; });
 }
