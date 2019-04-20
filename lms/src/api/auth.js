@@ -1,7 +1,6 @@
 // api/auth.js
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import qs from 'qs';
 export function logIn(username, password) {
   // we simulate the async request to login api here
   // replace it with real api call axios.post('api/login', {email, password})
@@ -122,23 +121,26 @@ export function checkValidUserName(username) {
 }
 
 
-
-
 export function getVericode(phone) {
   // console.log('API get vericode fired', phone);
-  const curToken = getToken();
-  console.log('API vericode token', curToken.PromiseValue);
+  // const curToken = getToken();
+  // console.log('API vericode token', curToken.PromiseValue);
   const b = axios.post(`/Vericode/phone?phone=${phone}`)
     .then(response => (response.data))
   console.log('API vericode result', b);
-  const curSMS=getSMS(phone,'amark\'s test',curToken);
+  // const curSMS=getSMS(phone,'amark\'s test',curToken);
+  // getToken().then(res => {console.log('API token',res);
+  //   getSMS(phone,'amark test',res).then(response=>console.log('sms',response))});
+  // console.log('API vericode SMS',curSMS);
+
+  const curSMS=getSMS(phone,'amark\'s test');
   console.log('API vericode SMS',curSMS);
   return axios.get(`/vericode/phone?phone=${phone}`).then(response => (response.data));
 }
 
 const token = axios.create({
   baseURL: 'https://tapi.telstra.com/v2',
-  timeout: 2000,
+  timeout: 9000,
   async: true,
   withCredentials: false,
   crossdomain: true,
@@ -158,15 +160,19 @@ const sms = axios.create({
   timeout: 2000,
   withCredentials: false,
   crossdomain: true,
+  // headers
   // headers: {
-  //   Authorization: 'Bearer hw6YbsN838Ea0yShu1c3rmjCAwBO',
+    // "Accept": "application/json",
+    // "Authorization": "Bearer GGUsUxs07A6VxuDUOPX20o6at620",
+    // "Content-Type": "application/x-www-form-urlencoded",
+    // "Authorization": "Bearer GGUsUxs07A6VxuDUOPX20o6at620"
   // }
 });
 // axios.defaults.withCredentials = false;
 
-export async function getToken() {
-  let result = await token.post('/oauth/token',
-    qs.stringify({
+export function getToken() {
+  let result = token.post('/oauth/token',
+    JSON.stringify({
       grant_type: "client_credentials",
       scope: "NSMS",
       client_id: "cbqBzkfoif8gDQz1pqI09lwL4cwcOJbo",
@@ -178,17 +184,54 @@ export async function getToken() {
   // .catch(error => { console.error('api token', error); throw error; });
 }
 
-export function getSMS(phone, code, token) {
-  return sms.post('/messages/sms', qs.stringify({
-    to: phone,
-    validity: 60,
-    priority: false,
-    body: code
-  }),
-  qs.stringify({
-    headers: {
-    Authorization: `Bearer ${token}`,
-  }})
+export function getSMS(phone, code) {
+  let result = sms.post('/messages/sms',
+  // JSON.stringify(
+    {
+    to:"61452580593",
+    validity:60,
+    priority:false,
+    body:"This is a test msg from Telstra amark"
+  },
+  // ),
+  {
+    headers:
+    {
+      "Accept": "application/json",
+      "Authorization": "Bearer QA4aJALMGbkiIeMIbjA0ETEGeGUp",
+      "Content-Type": "application/x-www-form-urlencoded",
+    }
+      // 'Authorization':"Bearer GGUsUxs07A6VxuDUOPX20o6at620"}
+  }
+  // return sms.post('/messages/sms', 
+  // JSON.stringify(
+  //   {
+  //   to:"61452580593",
+  //   validity:60,
+  //   priority:false,
+  //   body:"This is a test msg from Telstra amark"
+  // }
+  // ),
+  // {
+  //   headers:
+  //   {'Authorization':"Bearer GGUsUxs07A6VxuDUOPX20o6at620"}
+  // }
+  // {
+  //   headers: 
+  //   {'Authorization': "Bearer GGUsUxs07A6VxuDUOPX20o6at620"}
+  // }
+  // return sms.post('/messages/sms', {
+  //   to: phone,
+  //   validity: 60,
+  //   priority: false,
+  //   body: code
+  // },
+  // {
+  // headers: {
+  //   Authorization: `Bearer ${token}`,
+  // }
+  // }
   ).then(response => { console.log('sms response', response); }
   ).catch(error => { console.error('api sms', error); throw error; });
+  return result;
 }
