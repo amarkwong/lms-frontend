@@ -32,7 +32,7 @@ class App extends Component {
         <NavBar className="App-Navbar"></NavBar>
         {/* <NavBar></NavBar> */}
         <Switch>
-            <Route path='/home' exact component={Home} />
+            {/* <Route path='/home' exact component={Home} /> */}
             <Route path='/login' exact component={Login} />
             <Route path='/courses' exact component={Courses} />
             <Route path='/students' exact component={Students} />

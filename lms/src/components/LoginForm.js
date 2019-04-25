@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import MuiPhoneNumber from 'material-ui-phone-number';
 
 import {
     vericodeRequest,
-  } from '../actions/users'
+} from '../actions/users'
 
 const styles = theme => ({
     container: {
@@ -36,6 +37,7 @@ class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            countrycode: '',
             username: '',
             email: '',
             password: '',
@@ -45,7 +47,7 @@ class LoginForm extends React.Component {
     }
 
     getVericode = () => {
-        console.log('get vericode',this.state.phone)
+        console.log('get vericode', this.state.phone)
         this.props.vericodeRequest(this.state.phone);
     }
     handleChange = name => event => {
@@ -56,7 +58,7 @@ class LoginForm extends React.Component {
     handleSignupSubmit = e => {
         // console.log('FORM handle signup fired')
         e.preventDefault();
-        const { username,email, password, phone, verifycode } = this.state;
+        const { username, email, password, phone, verifycode } = this.state;
 
         this.props.onSubmit({
             username: username,
@@ -70,7 +72,7 @@ class LoginForm extends React.Component {
 
     handleLoginSubmit = e => {
         e.preventDefault();
-        console.log('login submit',this.state.username,this.state.password);
+        console.log('login submit', this.state.username, this.state.password);
         const { username, password } = this.state;
 
         this.props.onSubmit({
@@ -84,6 +86,12 @@ class LoginForm extends React.Component {
         //     password: '',
         // });
     };
+
+    handleOnChange = (value) => {
+        this.setState({
+            countrycode: value
+        });
+    }
 
     render() {
         const {
@@ -101,6 +109,23 @@ class LoginForm extends React.Component {
                     />
                     :
                     null}
+
+                {mode === 'signup' ?
+                    <TextField
+                        required
+                        id="standard-email"
+                        label="email"
+                        className={classes.textField}
+                        onChange={this.handleChange('email')}
+                        margin="normal"
+                    />
+                    :
+                    null}
+                {/* {mode === 'signup' ?
+                    <MuiPhoneNumber label="phone" className={classes.textField} defaultCountry={'au'} onlyCountries={['us', 'au', 'cn', 'tw']} disableAreaCodes={true} onChange={this.handleCodeChange} />
+                    :
+                    null
+                } */}
                 {mode === 'signup' ?
                     <TextField
                         required
@@ -112,17 +137,6 @@ class LoginForm extends React.Component {
                     />
                     :
                     null}
-                {mode === 'signup' ?
-                <TextField
-                    required
-                    id="standard-email"
-                    label="email"
-                    className={classes.textField}
-                    onChange={this.handleChange('email')}
-                    margin="normal"
-                />
-                :
-                null}
                 <TextField
                     required
                     id="standard-username"
@@ -156,5 +170,6 @@ LoginForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default connect((vericode) => (vericode),{
-    vericodeRequest})(withStyles(styles)(LoginForm));
+export default connect((vericode) => (vericode), {
+    vericodeRequest
+})(withStyles(styles)(LoginForm));

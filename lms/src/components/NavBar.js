@@ -41,9 +41,9 @@ function NavBar(props) {
           </Typography>
           {/* <TextButton>Courses</TextButton> */}
           <Grid container spacing={24}>
-            <Grid item xs>
+            {/* <Grid item xs>
               <Button color="inherit" href="/">Home</Button>
-            </Grid>
+            </Grid> */}
             <Grid item xs>
               <Button color="inherit" href="/courses">Courses</Button>
             </Grid>
